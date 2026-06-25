@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 
+use Illuminate\Http\Request;
+
 Route::get('/', function () {
 
     return view('login');
@@ -25,9 +27,30 @@ Route::get('/logout', function () {
     return redirect('/');
 
 });
+
 Route::get('/transaksi', function () {
 
     return view('transaksi');
+
+});
+
+Route::post('/transaksi', function (Request $request) {
+
+    session([
+
+        'nama' => $request->nama,
+
+        'layanan' => $request->layanan,
+
+        'berat' => $request->berat,
+
+        'total' => $request->total,
+
+        'status' => $request->status,
+
+    ]);
+
+    return redirect('/laporan');
 
 });
 
