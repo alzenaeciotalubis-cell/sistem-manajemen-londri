@@ -25,3 +25,14 @@ Route::get('/logout', function () {
     return redirect('/');
 
 });
+Route::get('/transaksi', function () {
+
+    return view('transaksi');
+
+});
+
+Route::get('/laporan', function () {
+
+    return view('laporan');
+
+});
