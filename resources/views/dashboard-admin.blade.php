@@ -1,491 +1,317 @@
 <!DOCTYPE html>
-
 <html lang="id">
-
 <head>
-
     <meta charset="UTF-8">
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>Dashboard Admin - Sistem Manajemen Laundry</title>
-
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        body {
+            background: #fbf6f8;
+            display: flex;
+            color: #444;
+        }
+        /* Sidebar Modern */
+        .sidebar {
+            width: 270px;
+            height: 100vh;
+            background: linear-gradient(135deg, #ff4d94, #ff80bf);
+            color: white;
+            position: fixed;
+            padding: 30px 20px;
+            box-shadow: 4px 0 25px rgba(255, 77, 148, 0.15);
+            z-index: 100;
+        }
+        .logo {
+            text-align: center;
+            margin-bottom: 35px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            padding-bottom: 20px;
+        }
+        .logo h2 {
+            font-size: 26px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+        .logo p {
+            margin-top: 5px;
+            font-size: 14px;
+            opacity: 0.85;
+        }
+        .menu a {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            color: rgba(255, 255, 255, 0.9);
+            padding: 14px 20px;
+            margin-bottom: 8px;
+            border-radius: 12px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        .menu a:hover {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            transform: translateX(5px);
+        }
+        /* Main Workspace */
+        .main {
+            margin-left: 270px;
+            width: calc(100% - 270px);
+            padding: 40px;
+        }
+        /* Header Card */
+        .header {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.04);
+            margin-bottom: 30px;
+        }
+        .header h1 {
+            color: #ff4d94;
+            font-size: 28px;
+            font-weight: 700;
+        }
+        .header p {
+            color: #777;
+            margin-top: 4px;
+        }
+        #waktu {
+            color: #ff80bf;
+            font-weight: 600;
+            font-size: 14px;
+            margin-top: 8px;
+        }
+        .profile {
+            background: linear-gradient(45deg, #ff4d94, #ff80bf);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 15px;
+            text-align: right;
+            box-shadow: 0 5px 15px rgba(255, 77, 148, 0.2);
+        }
+        .profile h3 { font-size: 16px; }
+        .profile p { font-size: 12px; opacity: 0.9; color: white; margin: 0; }
 
-        *{
-
-            margin:0;
-
-            padding:0;
-
-            box-sizing:border-box;
-
-            font-family:'Segoe UI',sans-serif;
-
+        /* Grid Statistik */
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+        .card {
+            background: white;
+            padding: 25px;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 4px;
+            background: linear-gradient(90deg, #ff4d94, #ff80bf);
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(255, 77, 148, 0.1);
+        }
+        .card h1 {
+            font-size: 36px;
+            color: #ff4d94;
+            margin-bottom: 5px;
+            font-weight: 700;
+        }
+        .card p {
+            color: #666;
+            font-size: 14px;
+            font-weight: 500;
         }
 
-        body{
-
-            background:#fff0f5;
-
-            display:flex;
-
+        /* Container Box */
+        .box {
+            background: white;
+            margin-bottom: 30px;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+        }
+        .box h2 {
+            color: #333;
+            font-size: 20px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
-        /* Sidebar */
-
-        .sidebar{
-
-            width:270px;
-
-            height:100vh;
-
-            background:linear-gradient(180deg,#ff4d94,#ff80bf);
-
-            color:white;
-
-            position:fixed;
-
-            padding:30px;
-
-            box-shadow:5px 0 20px rgba(0,0,0,0.1);
-
+        /* Desain Tabel Modern */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
         }
-
-        .logo{
-
-            text-align:center;
-
-            margin-bottom:40px;
-
+        th {
+            background: #fff0f5;
+            color: #ff4d94;
+            padding: 16px;
+            font-weight: 600;
+            font-size: 14px;
+            border-radius: 8px;
         }
-
-        .logo h2{
-
-            font-size:30px;
-
+        td {
+            padding: 16px;
+            border-bottom: 1px solid #f5eff2;
+            font-size: 15px;
         }
-
-        .logo p{
-
-            margin-top:10px;
-
-            opacity:0.9;
-
+        tr:hover td {
+            background-color: #fdfbfd;
         }
-
-        .menu a{
-
-            display:block;
-
-            text-decoration:none;
-
-            color:white;
-
-            padding:15px;
-
-            margin-bottom:12px;
-
-            border-radius:15px;
-
-            transition:0.3s;
-
+        .status {
+            display: inline-block;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
         }
+        .status.selesai { background: #e6fcf5; color: #0ca678; }
+        .status.proses { background: #fff0f6; color: #d6336c; }
+        .status.menunggu { background: #fff9db; color: #f59f00; }
 
-        .menu a:hover{
-
-            background:rgba(255,255,255,0.3);
-
-            transform:translateX(5px);
-
+        /* Desain Grafik Bar */
+        .chart-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
         }
-
-        /* Main */
-
-        .main{
-
-            margin-left:270px;
-
-            width:100%;
-
-            padding:30px;
-
+        .chart-row {
+            display: flex;
+            align-items: center;
+            gap: 15px;
         }
-
-        /* Header */
-
-        .header{
-
-            background:white;
-
-            border-radius:25px;
-
-            padding:25px;
-
-            display:flex;
-
-            justify-content:space-between;
-
-            align-items:center;
-
-            box-shadow:0 8px 20px rgba(0,0,0,0.08);
-
+        .day-label {
+            width: 70px;
+            font-weight: 600;
+            font-size: 14px;
         }
-
-        .header h1{
-
-            color:#ff4d94;
-
+        .bar-wrapper {
+            flex-grow: 1;
+            background: #f1f3f5;
+            height: 16px;
+            border-radius: 10px;
+            overflow: hidden;
         }
-
-        #waktu{
-
-            color:gray;
-
-            margin-top:10px;
-
+        .bar {
+            height: 100%;
+            background: linear-gradient(90deg, #ff4d94, #ff80bf);
+            border-radius: 10px;
+            transition: width 1s ease-in-out;
         }
-
-        .profile{
-
-            background:linear-gradient(45deg,#ff4d94,#ff80bf);
-
-            color:white;
-
-            padding:18px 25px;
-
-            border-radius:20px;
-
-            text-align:center;
-
+        .price-label {
+            width: 90px;
+            text-align: right;
+            font-size: 14px;
+            font-weight: 600;
         }
-
-        /* Cards */
-
-        .cards{
-
-            display:grid;
-
-            grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-
-            gap:20px;
-
-            margin-top:30px;
-
-        }
-
-        .card{
-
-            background:white;
-
-            padding:30px;
-
-            border-radius:25px;
-
-            text-align:center;
-
-            box-shadow:0 8px 20px rgba(0,0,0,0.08);
-
-            transition:0.3s;
-
-        }
-
-        .card:hover{
-
-            transform:translateY(-8px);
-
-        }
-
-        .card h1{
-
-            font-size:38px;
-
-            color:#ff4d94;
-
-            margin-bottom:10px;
-
-        }
-
-        .card p{
-
-            color:#666;
-
-        }
-
-        /* Box */
-
-        .box{
-
-            background:white;
-
-            margin-top:30px;
-
-            padding:25px;
-
-            border-radius:25px;
-
-            box-shadow:0 8px 20px rgba(0,0,0,0.08);
-
-        }
-
-        .box h2{
-
-            color:#ff4d94;
-
-            margin-bottom:20px;
-
-        }
-
-        table{
-
-            width:100%;
-
-            border-collapse:collapse;
-
-        }
-
-        th{
-
-            background:#ff4d94;
-
-            color:white;
-
-            padding:15px;
-
-        }
-
-        td{
-
-            padding:15px;
-
-            border-bottom:1px solid #eee;
-
-        }
-
-        .status{
-
-            background:#ffe6f0;
-
-            color:#ff4d94;
-
-            padding:8px 15px;
-
-            border-radius:20px;
-
-        }
-
-        .grafik{
-
-            line-height:40px;
-
-            font-size:18px;
-
-        }
-
     </style>
-
 </head>
-
 <body>
 
-<div class="sidebar">
+    <div class="sidebar">
+        <div class="logo">
+            <h2>Bubbles Q</h2>
+            <p>Admin Workspace</p>
+        </div>
+        <div class="menu">
+            <a href="{{ url('admin') }}">🏠 &nbsp; Dashboard</a>
+            <a href="{{ url('pelanggan') }}">👥 &nbsp; Data Pelanggan</a>
+            <a href="{{ url('paket') }}">🧺 &nbsp; Data Layanan</a>
+            <a href="{{ url('transaksi') }}">📦 &nbsp; Data Transaksi</a>
 
-    <div class="logo">
+            <a href="{{ url('pembayaran') }}">💳 &nbsp; Data Pembayaran</a>
+            <a href="{{ url('petugas') }}">👨‍💼 &nbsp; Data Petugas</a>
+            <a href="{{ url('/laporan') }}">📊 &nbsp; Laporan Keuangan</a>
 
-        <h2>🧺 Laundry App</h2>
-
-        <p>Administrator</p>
-
+            <a href="{{ url('logout') }}" style="margin-top: 40px; background: rgba(0,0,0,0.15);">🚪 &nbsp; Logout</a>
+        </div>
     </div>
 
-    <div class="menu">
+    <div class="main">
+        <div class="header">
+            <div>
+                <h1>Selamat Datang, Admin!</h1>
+                <p>Pantau perkembangan bisnismu hari ini di panel kendali.</p>
+                <div id="waktu">Senin, 22 Juni 2026 | 19:45 WIB</div>
+            </div>
+            <div class="profile">
+                <h3>Super Admin</h3>
+                <p>ID: #001-Bubbles</p>
+            </div>
+        </div>
 
-        <a href="#">🏠 Dashboard</a>
+        <div class="cards">
+            <div class="card">
+                <h1>12</h1>
+                <p>Pesanan Aktif</p>
+            </div>
+            <div class="card">
+                <h1>45</h1>
+                <p>Pelanggan Terdaftar</p>
+            </div>
+            <div class="card">
+                <h1>Rp 1.250k</h1>
+                <p>Pendapatan Hari Ini</p>
+            </div>
+        </div>
 
-        <a href="#">👥 Data Pelanggan</a>
-
-        <a href="#">🧺 Data Layanan</a>
-
-        <a href="#">📦 Data Transaksi</a>
-
-        <a href="#">💳 Data Pembayaran</a>
-
-        <a href="#">👨‍💼 Data Petugas</a>
-
-        <a href="/">🚪 Logout</a>
-
+        <div class="box">
+            <h2>📦 Transaksi Terbaru</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Pelanggan</th>
+                        <th>Layanan</th>
+                        <th>Berat</th>
+                        <th>Total Harga</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>#TRX098</td>
+                        <td>Andi Wijaya</td>
+                        <td>Cuci Kering + Setrika</td>
+                        <td>4.5 Kg</td>
+                        <td>Rp 36.000</td>
+                        <td><span class="status proses">Proses</span></td>
+                    </tr>
+                    <tr>
+                        <td>#TRX097</td>
+                        <td>Siti Rahma</td>
+                        <td>Bed Cover Large</td>
+                        <td>1 Pcs</td>
+                        <td>Rp 45.000</td>
+                        <td><span class="status selesai">Selesai</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
-
-</div>
-
-<div class="main">
-
-    <div class="header">
-
-        <div>
-
-            <h1>Selamat Datang, Alzena 👋</h1>
-
-            <p>Sistem Manajemen Laundry Berbasis Web</p>
-
-            <p id="waktu"></p>
-
-        </div>
-
-        <div class="profile">
-
-            <h3>👩‍💻 Alzena</h3>
-
-            <p>Administrator</p>
-
-        </div>
-
-    </div>
-
-    <div class="cards">
-
-        <div class="card">
-
-            <h1>120</h1>
-
-            <p>👥 Total Pelanggan</p>
-
-        </div>
-
-        <div class="card">
-
-            <h1>80</h1>
-
-            <p>📦 Total Transaksi</p>
-
-        </div>
-
-        <div class="card">
-
-            <h1>60</h1>
-
-            <p>💳 Total Pembayaran</p>
-
-        </div>
-
-        <div class="card">
-
-            <h1>5</h1>
-
-            <p>👨‍💼 Total Petugas</p>
-
-        </div>
-
-        <div class="card">
-
-            <h1>Rp850K</h1>
-
-            <p>💰 Pendapatan Hari Ini</p>
-
-        </div>
-
-        <div class="card">
-
-            <h1>25</h1>
-
-            <p>🧺 Laundry Diproses</p>
-
-        </div>
-
-        <div class="card">
-
-            <h1>50</h1>
-
-            <p>✅ Laundry Selesai</p>
-
-        </div>
-
-    </div>
-
-    <div class="box">
-
-        <h2>📋 Transaksi Terbaru</h2>
-
-        <table>
-
-            <tr>
-
-                <th>Pelanggan</th>
-
-                <th>Layanan</th>
-
-                <th>Status</th>
-
-            </tr>
-
-            <tr>
-
-                <td>Budi</td>
-
-                <td>Cuci Express</td>
-
-                <td><span class="status">Selesai</span></td>
-
-            </tr>
-
-            <tr>
-
-                <td>Siti</td>
-
-                <td>Cuci Reguler</td>
-
-                <td><span class="status">Diproses</span></td>
-
-            </tr>
-
-            <tr>
-
-                <td>Andi</td>
-
-                <td>Setrika</td>
-
-                <td><span class="status">Menunggu</span></td>
-
-            </tr>
-
-        </table>
-
-    </div>
-
-    <div class="box">
-
-        <h2>📊 Pendapatan Mingguan</h2>
-
-        <div class="grafik">
-
-            Senin : ███████ Rp120.000<br>
-
-            Selasa : █████████ Rp180.000<br>
-
-            Rabu : ██████████ Rp200.000<br>
-
-            Kamis : ███████████ Rp250.000<br>
-
-            Jumat : █████████████ Rp300.000
-
-        </div>
-
-    </div>
-
-</div>
-
-<script>
-
-setInterval(function(){
-
-    document.getElementById('waktu').innerHTML =
-
-        new Date().toLocaleString();
-
-},1000);
-
-</script>
 
 </body>
-
 </html>

@@ -9,19 +9,13 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('transaksis', function (Blueprint $table) {
-
             $table->id();
 
-            $table->foreignId('pelanggan_id')
-                ->constrained('pelanggans')
-                ->cascadeOnDelete();
-
-            $table->foreignId('paket_id')
-                ->constrained('pakets')
-                ->cascadeOnDelete();
+            // Menggunakan unsignedBigInteger agar tipe datanya 100% klop dengan id() tabel utama
+            $table->unsignedBigInteger('pelanggan_id');
+            $table->unsignedBigInteger('paket_id');
 
             $table->decimal('berat_kg', 5, 2);
-
             $table->decimal('total_harga', 10, 2);
 
             $table->enum('status', [
@@ -32,9 +26,11 @@ return new class extends Migration
 
             $table->timestamps();
 
+            // Deklarasi Foreign Key secara manual (Sangat minim risiko salah tipe data)
+            $table->foreign('pelanggan_id')->references('id')->on('pelanggans')->onDelete('cascade');
+            $table->foreign('paket_id')->references('id')->on('pakets')->onDelete('cascade');
         });
     }
-
 
     public function down(): void
     {
