@@ -1,286 +1,143 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
+@extends('layouts.app')
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+@section('title','Data Transaksi')
 
-    <title>Daftar Transaksi Laundry</title>
+@section('page-title','Data Transaksi Laundry')
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+@section('content')
 
+<div class="box">
 
-    <style>
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
 
-        body {
-            background-color: #fff5f9;
-        }
+        <h2>🧾 Daftar Transaksi Laundry</h2>
 
-        h2 {
-            color: #d63384;
-            font-weight: bold;
-        }
+        <a href="{{ route('transaksi.create') }}" class="btn btn-success">
 
-        .btn-pink {
-            background-color: #f06595;
-            border: none;
-            color: white;
-        }
+            + Tambah Transaksi
 
-        .btn-pink:hover {
-            background-color: #d63384;
-            color: white;
-        }
+        </a>
 
-        .card {
-            border-radius: 12px;
-            border: none;
-            box-shadow: 0 2px 8px rgba(214,51,132,0.1);
-        }
+    </div>
 
-        .badge-proses {
-            background-color: #ffc107;
-            color: black;
-        }
+    @if(session('sukses'))
 
-        .badge-selesai {
-            background-color: #198754;
-        }
+        <div class="alert alert-success">
 
-        .badge-diambil {
-            background-color: #0d6efd;
-        }
+            {{ session('sukses') }}
 
-    </style>
+        </div>
 
-</head>
+    @endif
 
+    <table>
 
-<body class="container mt-5 mb-5">
+        <thead>
 
+            <tr>
 
+                <th>No</th>
 
-<h2 class="mb-4">
-    🧾 Daftar Transaksi Laundry
-</h2>
+                <th>Tanggal</th>
 
+                <th>Nama Pelanggan</th>
 
+                <th>Paket</th>
 
-<div class="mb-4">
+                <th>Berat</th>
 
-<a href="{{ route('transaksi.create') }}"
-   class="btn btn-pink me-2">
+                <th>Total Harga</th>
 
-+ Tambah Transaksi Baru
+                <th>Status</th>
 
-</a>
+                <th>Aksi</th>
 
+            </tr>
 
-<a href="/" class="btn btn-secondary">
+        </thead>
 
-← Kembali ke Dashboard
+        <tbody>
 
-</a>
+        @forelse($transaksi as $no => $t)
 
+        <tr>
+
+            <td>{{ $no+1 }}</td>
+
+            <td>{{ $t->created_at->format('d/m/Y H:i') }}</td>
+
+            <td>{{ $t->pelanggan->nama ?? '-' }}</td>
+
+            <td>{{ $t->paket->nama_paket ?? '-' }}</td>
+
+            <td>{{ $t->berat_kg }} Kg</td>
+
+            <td>Rp {{ number_format($t->total_harga,0,',','.') }}</td>
+
+            <td>
+
+                @if($t->status=='proses')
+
+                    <span class="status proses">Proses</span>
+
+                @elseif($t->status=='selesai')
+
+                    <span class="status selesai">Selesai</span>
+
+                @else
+
+                    <span class="status menunggu">Diambil</span>
+
+                @endif
+
+            </td>
+
+            <td>
+
+                <a href="{{ route('transaksi.edit',$t->id) }}" class="btn btn-warning btn-sm">
+
+                    Edit
+
+                </a>
+
+                <form action="{{ route('transaksi.destroy',$t->id) }}" method="POST" style="display:inline">
+
+                    @csrf
+
+                    @method('DELETE')
+
+                    <button class="btn btn-danger btn-sm"
+
+                    onclick="return confirm('Yakin ingin menghapus?')">
+
+                        Hapus
+
+                    </button>
+
+                </form>
+
+            </td>
+
+        </tr>
+
+        @empty
+
+        <tr>
+
+            <td colspan="8" style="text-align:center;">
+
+                Belum ada data transaksi.
+
+            </td>
+
+        </tr>
+
+        @endforelse
+
+        </tbody>
+
+    </table>
 
 </div>
 
-
-
-
-@if(session('sukses'))
-
-<div class="alert alert-success">
-
-{{ session('sukses') }}
-
-</div>
-
-@endif
-
-
-
-
-
-<div class="card p-4">
-
-
-<table class="table table-hover">
-
-
-<thead>
-
-<tr>
-
-<th>No</th>
-<th>Tanggal</th>
-<th>Nama Pelanggan</th>
-<th>Paket</th>
-<th>Berat (Kg)</th>
-<th>Total Harga</th>
-<th>Status</th>
-<th>Aksi</th>
-
-</tr>
-
-</thead>
-
-
-
-<tbody>
-
-
-
-@if($transaksi->isEmpty())
-
-
-<tr>
-
-<td colspan="8" class="text-center text-muted">
-
-Belum ada transaksi apapun
-
-</td>
-
-</tr>
-
-
-
-@else
-
-
-
-@foreach($transaksi as $no => $t)
-
-
-<tr>
-
-
-<td>{{ $no + 1 }}</td>
-
-
-<td>
-{{ $t->created_at->format('d/m/Y H:i') }}
-</td>
-
-
-<td>
-{{ $t->pelanggan->nama ?? '-' }}
-</td>
-
-
-<td>
-{{ $t->paket->nama_paket ?? '-' }}
-</td>
-
-
-<td>
-{{ $t->berat_kg }} Kg
-</td>
-
-
-<td>
-Rp {{ number_format($t->total_harga,0,',','.') }}
-</td>
-
-
-
-<td>
-
-
-@if($t->status == 'proses')
-
-<span class="badge badge-proses">
-🔄 Proses
-</span>
-
-
-@elseif($t->status == 'selesai')
-
-
-<span class="badge badge-selesai">
-✅ Selesai
-</span>
-
-
-@else
-
-
-<span class="badge badge-diambil">
-📤 Diambil
-</span>
-
-
-@endif
-
-
-</td>
-
-
-
-
-<td>
-
-
-<a href="{{ route('transaksi.edit',$t->id) }}"
-class="btn btn-warning btn-sm">
-
-✏️ Edit
-
-</a>
-
-
-
-
-
-<form action="{{ route('transaksi.destroy',$t->id) }}"
-method="POST"
-class="d-inline"
-onsubmit="return confirm('Yakin hapus?')">
-
-
-@csrf
-
-@method('DELETE')
-
-
-<button class="btn btn-danger btn-sm">
-
-🗑️ Hapus
-
-</button>
-
-
-</form>
-
-
-
-</td>
-
-
-
-</tr>
-
-
-
-@endforeach
-
-
-
-@endif
-
-
-
-
-</tbody>
-
-
-</table>
-
-
-</div>
-
-
-
-</body>
-</html>
+@endsection

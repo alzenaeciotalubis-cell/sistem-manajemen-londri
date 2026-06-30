@@ -1,158 +1,57 @@
-<!DOCTYPE html>
-<html lang="id">
+@extends('layouts.app')
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+@section('title', 'Tambah Pelanggan')
 
-    <title>Tambah Pelanggan</title>
+@section('page-title', 'Tambah Pelanggan')
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+@section('content')
 
+<div class="box">
 
-    <style>
+    <h2>➕ Tambah Pelanggan</h2>
 
-        body {
-            background-color: #fff0f6;
-        }
+    <form action="{{ route('pelanggan.store') }}" method="POST">
 
+        @csrf
 
-        h2 {
-            color: #d63384;
-            font-weight: bold;
-        }
+        <div style="margin-bottom:15px;">
 
+            <label>Nama Pelanggan</label><br>
 
-        .card {
-            border: none;
-            border-radius: 18px;
-            box-shadow: 0 5px 15px rgba(214,51,132,0.2);
-        }
+            <input type="text" name="nama" class="form-control" style="width:100%;padding:10px;border:1px solid #ddd;border-radius:8px;" required>
 
+        </div>
 
-        .btn-pink {
+        <div style="margin-bottom:15px;">
 
-            background-color: #d63384;
-            color: white;
-            border: none;
+            <label>No HP</label><br>
 
-        }
+            <input type="text" name="no_hp" class="form-control" style="width:100%;padding:10px;border:1px solid #ddd;border-radius:8px;" required>
 
+        </div>
 
-        .btn-pink:hover {
+        <div style="margin-bottom:20px;">
 
-            background-color: #a61e5c;
-            color: white;
+            <label>Alamat</label><br>
 
-        }
+            <textarea name="alamat" rows="4" style="width:100%;padding:10px;border:1px solid #ddd;border-radius:8px;" required></textarea>
 
+        </div>
 
-        .form-control:focus {
+        <button type="submit" class="btn">
 
-            border-color: #d63384;
+            Simpan
 
-            box-shadow: 0 0 0 0.2rem rgba(214,51,132,.25);
+        </button>
 
-        }
+        <a href="{{ route('pelanggan.index') }}" class="btn">
 
-    </style>
+            Kembali
 
-</head>
+        </a>
 
+    </form>
 
-<body class="container mt-5 mb-5">
+</div>
 
-
-    <h2 class="mb-4">
-        ➕ Tambah Pelanggan Baru
-    </h2>
-
-
-
-    <a href="{{ route('pelanggan.index') }}"
-       class="btn btn-secondary mb-4">
-
-        ← Kembali
-
-    </a>
-
-
-
-    <div class="card p-4">
-
-
-        <form action="{{ route('pelanggan.store') }}" method="POST">
-
-
-            @csrf
-
-
-
-            <div class="mb-3">
-
-                <label class="form-label">
-                    Nama Lengkap
-                </label>
-
-
-                <input type="text"
-                       name="nama"
-                       class="form-control"
-                       required>
-
-            </div>
-
-
-
-            <div class="mb-3">
-
-                <label class="form-label">
-                    Nomor Telepon
-                </label>
-
-
-                <input type="text"
-                       name="telepon"
-                       class="form-control"
-                       required>
-
-            </div>
-
-
-
-            <div class="mb-4">
-
-                <label class="form-label">
-                    Alamat Lengkap
-                </label>
-
-
-                <textarea name="alamat"
-                          class="form-control"
-                          rows="3"
-                          required></textarea>
-
-
-            </div>
-
-
-
-
-            <button type="submit"
-                    class="btn btn-pink w-100 py-2">
-
-                💾 Simpan Data
-
-            </button>
-
-
-
-        </form>
-
-
-    </div>
-
-
-</body>
-
-</html>
+@endsection

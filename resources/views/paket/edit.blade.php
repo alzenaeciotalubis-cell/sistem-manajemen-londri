@@ -1,179 +1,83 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
+@extends('layouts.app')
 
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+@section('title', 'Edit Paket')
 
-    <title>Edit Paket Laundry</title>
+@section('page-title', 'Edit Paket Laundry')
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+@section('content')
 
+<div class="box">
 
-    <style>
+    <h2>✏️ Edit Paket Laundry</h2>
 
-        body {
-            background-color: #ffe6f2;
-        }
+    <form action="{{ route('paket.update', $paket->id) }}" method="POST">
 
+        @csrf
 
-        h2 {
-            color: #ff1493;
-            font-weight: bold;
-        }
+        @method('PUT')
 
+        <div style="margin-bottom:15px;">
 
-        .btn-pink {
+            <label>Jenis Paket</label><br>
 
-            background-color: #ff4fa3;
-            border: none;
-            color: white;
+            <input type="text"
 
-        }
+                   name="jenis"
 
+                   value="{{ $paket->jenis }}"
 
-        .btn-pink:hover {
+                   style="width:100%;padding:10px;border:1px solid #ddd;border-radius:8px;"
 
-            background-color: #e60073;
-            color: white;
+                   required>
 
-        }
+        </div>
 
+        <div style="margin-bottom:15px;">
 
-        .form-control:focus {
+            <label>Nama Paket</label><br>
 
-            border-color: #ff4fa3;
-            box-shadow: 0 0 0 0.2rem rgba(255,79,163,0.25);
+            <input type="text"
 
-        }
+                   name="nama_paket"
 
+                   value="{{ $paket->nama_paket }}"
 
-        .card {
+                   style="width:100%;padding:10px;border:1px solid #ddd;border-radius:8px;"
 
-            border-radius: 15px;
-            border: none;
-            box-shadow: 0 5px 15px rgba(255,20,147,0.2);
+                   required>
 
-        }
+        </div>
 
+        <div style="margin-bottom:20px;">
 
-    </style>
+            <label>Harga</label><br>
 
+            <input type="number"
 
-</head>
+                   name="harga"
 
+                   value="{{ $paket->harga }}"
 
-<body class="container mt-5 mb-5">
+                   style="width:100%;padding:10px;border:1px solid #ddd;border-radius:8px;"
 
+                   required>
 
-    <h2 class="mb-4">
-        ✏️ Edit Data Paket
-    </h2>
+        </div>
 
+        <button type="submit" class="btn">
 
+            Update
 
-    <a href="{{ route('paket.index') }}"
-       class="btn btn-secondary mb-4">
+        </button>
 
-        ← Kembali ke Daftar
+        <a href="{{ route('paket.index') }}" class="btn">
 
-    </a>
+            Kembali
 
+        </a>
 
+    </form>
 
+</div>
 
-    <div class="card p-4">
-
-
-        <form action="{{ route('paket.update',$paket->id) }}"
-              method="POST">
-
-
-            @csrf
-
-            @method('PUT')
-
-
-
-
-            <div class="mb-3">
-
-
-                <label class="form-label">
-                    Nama Paket
-                </label>
-
-
-                <input type="text"
-                       name="nama_paket"
-                       value="{{ $paket->nama_paket }}"
-                       class="form-control"
-                       required>
-
-
-            </div>
-
-
-
-
-
-            <div class="mb-3">
-
-
-                <label class="form-label">
-                    Harga per Kg (Rp)
-                </label>
-
-
-                <input type="number"
-                       name="harga"
-                       min="0"
-                       value="{{ $paket->harga }}"
-                       class="form-control"
-                       required>
-
-
-            </div>
-
-
-
-
-
-            <div class="mb-4">
-
-
-                <label class="form-label">
-                    Keterangan
-                </label>
-
-
-                <textarea name="keterangan"
-                          class="form-control"
-                          rows="3">{{ $paket->keterangan }}</textarea>
-
-
-            </div>
-
-
-
-
-
-            <button type="submit"
-                    class="btn btn-pink w-100 py-2">
-
-                💾 Simpan Perubahan
-
-            </button>
-
-
-
-
-        </form>
-
-
-    </div>
-
-
-
-</body>
-</html>
+@endsection

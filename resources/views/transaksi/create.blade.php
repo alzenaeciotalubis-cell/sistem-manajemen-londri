@@ -1,258 +1,169 @@
-<!DOCTYPE html>
-<html lang="id">
+@extends('layouts.app')
 
-<head>
+@section('title','Tambah Transaksi')
 
-<meta charset="UTF-8">
+@section('page-title','Tambah Transaksi')
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+@section('content')
 
+<div class="box">
 
-<title>Tambah Transaksi Baru</title>
+    <h2>🧺 Tambah Transaksi Laundry</h2>
 
+    <form action="{{ route('transaksi.store') }}" method="POST">
 
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+        @csrf
 
+        <div class="form-group">
 
+            <label>👤 Nama Pelanggan</label>
 
-<style>
+            <select name="pelanggan_id" class="form-control" required>
 
-body {
-    background-color: #fff5f9;
-}
+                <option value="">-- Pilih Pelanggan --</option>
 
+                @foreach($pelanggan as $p)
 
-h2 {
-    color: #d63384;
-    font-weight: bold;
-}
+                    <option value="{{ $p->id }}">{{ $p->nama }}</option>
 
+                @endforeach
 
-.btn-pink {
+            </select>
 
-    background-color: #f06595;
-    border: none;
-    color: white;
+        </div>
 
-}
+        <div class="form-group">
 
+            <label>🧺 Jenis Paket Laundry</label>
 
-.btn-pink:hover {
+            <select name="paket_id" id="paket_id" class="form-control" required>
 
-    background-color: #d63384;
-    color: white;
+                <option value="">-- Pilih Paket --</option>
 
-}
+                @foreach($paket as $p)
 
+                    <option value="{{ $p->id }}"
 
-.form-control:focus,
-.form-select:focus {
+                            data-harga="{{ $p->harga }}">
 
-    border-color: #f06595;
+                        {{ $p->nama_paket }}
 
-    box-shadow: 0 0 0 0.2rem rgba(240,101,149,0.25);
+                        - Rp {{ number_format($p->harga,0,',','.') }}/Kg
 
-}
+                    </option>
 
+                @endforeach
 
+            </select>
 
-.card {
+        </div>
 
-    border-radius: 12px;
-    border: none;
-    box-shadow: 0 2px 8px rgba(214,51,132,0.1);
+        <div class="form-group">
 
-}
+            <label>⚖ Berat Cucian (Kg)</label>
 
+            <input type="number"
 
-</style>
+                   id="berat_kg"
 
+                   name="berat_kg"
 
-</head>
+                   class="form-control"
 
+                   step="0.1"
 
+                   min="0.1"
 
-<body class="container mt-5 mb-5">
+                   placeholder="Contoh : 3.5"
 
+                   required>
 
+        </div>
 
-<h2 class="mb-4">
-➕ Tambah Transaksi Baru
-</h2>
+        <div class="form-group">
 
+            <label>💰 Total Harga</label>
 
+            <input type="text"
 
+                   id="total_harga"
 
-<a href="{{ route('transaksi.index') }}"
-class="btn btn-secondary mb-4">
+                   class="form-control"
 
-← Kembali ke Daftar
+                   value="Rp 0"
 
-</a>
+                   readonly>
 
+        </div>
 
+        <div class="form-group">
 
+            <label>Status Laundry</label>
 
+            <input type="text"
 
-<div class="card p-4">
+                   class="form-control"
 
+                   value="Proses"
 
+                   readonly>
 
-<form action="{{ route('transaksi.store') }}" method="POST">
+        </div>
 
+        <button type="submit" class="btn btn-success">
 
-@csrf
+            💾 Simpan Transaksi
 
+        </button>
 
+        <a href="{{ route('transaksi.index') }}"
 
+           class="btn btn-secondary">
 
+            ↩ Kembali
 
-<div class="mb-3">
+        </a>
 
-
-<label class="form-label">
-Nama Pelanggan
-</label>
-
-
-
-<select name="pelanggan_id"
-class="form-select"
-required>
-
-
-
-<option value="">
--- Pilih Pelanggan --
-</option>
-
-
-
-@foreach($pelanggan as $p)
-
-
-<option value="{{ $p->id }}">
-
-{{ $p->nama }}
-
-</option>
-
-
-@endforeach
-
-
-
-</select>
-
+    </form>
 
 </div>
 
+<script>
 
+const paket=document.getElementById('paket_id');
 
+const berat=document.getElementById('berat_kg');
 
+const total=document.getElementById('total_harga');
 
+function hitungTotal(){
 
+    let harga=0;
 
-<div class="mb-3">
+    if(paket.selectedIndex>0){
 
+        harga=parseFloat(
 
-<label class="form-label">
-Jenis Paket Laundry
-</label>
+            paket.options[paket.selectedIndex].dataset.harga
 
+        );
 
+    }
 
-<select name="paket_id"
-class="form-select"
-required>
+    let kg=parseFloat(berat.value)||0;
 
+    let hasil=harga*kg;
 
+    total.value="Rp "+hasil.toLocaleString('id-ID');
 
+}
 
-<option value="">
--- Pilih Paket --
-</option>
+paket.addEventListener('change',hitungTotal);
 
+berat.addEventListener('keyup',hitungTotal);
 
+berat.addEventListener('change',hitungTotal);
 
-@foreach($paket as $p)
+</script>
 
-
-<option value="{{ $p->id }}">
-
-
-{{ $p->nama_paket }}
-
-- Rp {{ number_format($p->harga,0,',','.') }}/kg
-
-
-</option>
-
-
-@endforeach
-
-
-
-</select>
-
-
-</div>
-
-
-
-
-
-
-
-<div class="mb-4">
-
-
-<label class="form-label">
-Berat Cucian (Kg)
-</label>
-
-
-
-<input type="number"
-name="berat_kg"
-step="0.1"
-min="0.1"
-class="form-control"
-required>
-
-
-
-</div>
-
-
-
-
-
-
-
-<button type="submit"
-class="btn btn-pink w-100 py-2">
-
-
-💾 Simpan Transaksi
-
-
-</button>
-
-
-
-
-</form>
-
-
-
-
-</div>
-
-
-
-
-
-</body>
-
-</html>
+@endsection

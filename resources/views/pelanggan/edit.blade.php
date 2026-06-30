@@ -1,172 +1,81 @@
-<!DOCTYPE html>
-<html lang="id">
+@extends('layouts.app')
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+@section('title', 'Edit Pelanggan')
 
-    <title>Edit Pelanggan</title>
+@section('page-title', 'Edit Pelanggan')
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+@section('content')
 
+<div class="box">
 
-    <style>
+    <h2>✏️ Edit Data Pelanggan</h2>
 
-        body {
-            background-color: #fff0f6;
-        }
+    <form action="{{ route('pelanggan.update', $pelanggan->id) }}" method="POST">
 
+        @csrf
 
-        h2 {
-            color: #d63384;
-            font-weight: bold;
-        }
+        @method('PUT')
 
+        <div style="margin-bottom:15px;">
 
-        .card {
+            <label>Nama Pelanggan</label><br>
 
-            border: none;
-            border-radius: 18px;
-            box-shadow: 0 5px 15px rgba(214,51,132,0.2);
+            <input type="text"
 
-        }
+                   name="nama"
 
+                   value="{{ $pelanggan->nama }}"
 
-        .btn-pink {
+                   style="width:100%;padding:10px;border:1px solid #ddd;border-radius:8px;"
 
-            background-color: #d63384;
-            color: white;
-            border: none;
+                   required>
 
-        }
+        </div>
 
+        <div style="margin-bottom:15px;">
 
-        .btn-pink:hover {
+            <label>No HP</label><br>
 
-            background-color: #a61e5c;
-            color: white;
+            <input type="text"
 
-        }
+                   name="no_hp"
 
+                   value="{{ $pelanggan->no_hp }}"
 
-        .form-control:focus {
+                   style="width:100%;padding:10px;border:1px solid #ddd;border-radius:8px;"
 
-            border-color: #d63384;
+                   required>
 
-            box-shadow: 0 0 0 0.2rem rgba(214,51,132,.25);
+        </div>
 
-        }
+        <div style="margin-bottom:20px;">
 
-    </style>
+            <label>Alamat</label><br>
 
+            <textarea name="alamat"
 
-</head>
+                      rows="4"
 
+                      style="width:100%;padding:10px;border:1px solid #ddd;border-radius:8px;"
 
+                      required>{{ $pelanggan->alamat }}</textarea>
 
-<body class="container mt-5 mb-5">
+        </div>
 
+        <button type="submit" class="btn">
 
+            Update
 
-    <h2 class="mb-4">
-        ✏️ Edit Data Pelanggan
-    </h2>
+        </button>
 
+        <a href="{{ route('pelanggan.index') }}" class="btn">
 
+            Kembali
 
+        </a>
 
-    <a href="{{ route('pelanggan.index') }}"
-       class="btn btn-secondary mb-4">
+    </form>
 
-        ← Kembali
+</div>
 
-    </a>
-
-
-
-
-    <div class="card p-4">
-
-
-        <form action="{{ route('pelanggan.update',$pelanggan->id) }}"
-              method="POST">
-
-
-            @csrf
-            @method('PUT')
-
-
-
-            <div class="mb-3">
-
-                <label class="form-label">
-                    Nama Lengkap
-                </label>
-
-
-                <input type="text"
-                       name="nama"
-                       value="{{ $pelanggan->nama }}"
-                       class="form-control"
-                       required>
-
-            </div>
-
-
-
-
-            <div class="mb-3">
-
-                <label class="form-label">
-                    Nomor Telepon
-                </label>
-
-
-                <input type="text"
-                       name="telepon"
-                       value="{{ $pelanggan->telepon }}"
-                       class="form-control"
-                       required>
-
-            </div>
-
-
-
-
-            <div class="mb-4">
-
-                <label class="form-label">
-                    Alamat Lengkap
-                </label>
-
-
-                <textarea name="alamat"
-                          class="form-control"
-                          rows="3"
-                          required>{{ $pelanggan->alamat }}</textarea>
-
-
-            </div>
-
-
-
-
-            <button type="submit"
-                    class="btn btn-pink w-100 py-2">
-
-                💾 Simpan Perubahan
-
-            </button>
-
-
-
-        </form>
-
-
-    </div>
-
-
-
-</body>
-
-</html>
+@endsection

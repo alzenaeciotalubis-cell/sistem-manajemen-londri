@@ -1,236 +1,113 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Daftar Paket Laundry</title>
+@extends('layouts.app')
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+@section('title', 'Data Paket')
 
-    <style>
+@section('page-title', 'Data Paket Laundry')
 
-        body {
-            background-color: #ffe6f2;
-        }
+@section('content')
 
-        h2 {
-            color: #ff1493;
-            font-weight: bold;
-        }
+<div class="box">
 
-        .btn-pink {
-            background-color: #ff4fa3;
-            border: none;
-            color: white;
-        }
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
 
-        .btn-pink:hover {
-            background-color: #e60073;
-            color: white;
-        }
+        <h2>🧺 Data Paket Laundry</h2>
 
-        .card {
-            border-radius: 15px;
-            border: none;
-            box-shadow: 0 5px 15px rgba(255, 20, 147, 0.2);
-        }
+        <a href="{{ route('paket.create') }}" class="btn">
 
-
-        .table thead {
-            background-color: #ffc1df;
-            color: #8b005f;
-        }
-
-
-        .btn-warning {
-            background-color: #ffb703;
-            border: none;
-            color: white;
-        }
-
-
-        .btn-danger {
-            background-color: #ff3366;
-            border: none;
-        }
-
-
-    </style>
-
-</head>
-
-
-<body class="container mt-5 mb-5">
-
-
-    <h2 class="mb-4">
-        🧺 Daftar Paket Laundry
-    </h2>
-
-
-    <div class="mb-4">
-
-        <a href="{{ route('paket.create') }}" 
-           class="btn btn-pink me-2">
             + Tambah Paket
-        </a>
 
-
-        <a href="{{ route('pelanggan.index') }}" 
-           class="btn btn-secondary me-2">
-            ← Data Pelanggan
-        </a>
-
-
-        <a href="/" 
-           class="btn btn-secondary">
-            🏠 Dashboard
         </a>
 
     </div>
 
+    @if(session('success'))
 
+        <div style="background:#d1fae5;color:#065f46;padding:12px;border-radius:8px;margin-bottom:15px;">
 
-    @if(session('sukses'))
-
-        <div class="alert alert-success">
-
-            {{ session('sukses') }}
+            {{ session('success') }}
 
         </div>
 
     @endif
 
+    <table>
 
+        <thead>
 
+            <tr>
 
+                <th>No</th>
 
-    <div class="card p-4">
+                <th>Jenis</th>
 
+                <th>Nama Paket</th>
 
-        <table class="table table-hover table-bordered">
+                <th>Harga</th>
 
+                <th>Aksi</th>
 
-            <thead>
+            </tr>
 
-                <tr>
+        </thead>
 
-                    <th>No</th>
-                    <th>Nama Paket</th>
-                    <th>Harga (Rp)</th>
-                    <th>Keterangan</th>
-                    <th>Aksi</th>
+        <tbody>
 
-                </tr>
+        @forelse($pakets as $item)
 
-            </thead>
+        <tr>
 
+            <td>{{ $loop->iteration }}</td>
 
+            <td>{{ $item->jenis }}</td>
 
-            <tbody>
+            <td>{{ $item->nama_paket }}</td>
 
+            <td>Rp {{ number_format($item->harga) }}</td>
 
-            @foreach($pakets as $no => $p)
+            <td>
 
-                <tr>
+                <a href="{{ route('paket.edit',$item->id) }}" class="btn">
 
+                    Edit
 
-                    <td>
-                        {{ $no + 1 }}
-                    </td>
+                </a>
 
+                <form action="{{ route('paket.destroy',$item->id) }}" method="POST" style="display:inline;">
 
-                    <td>
-                        {{ $p->nama_paket }}
-                    </td>
+                    @csrf
 
+                    @method('DELETE')
 
-                    <td>
+                    <button class="btn" onclick="return confirm('Hapus data?')">
 
-                        Rp {{ number_format($p->harga,0,',','.') }}
+                        Hapus
 
-                    </td>
+                    </button>
 
+                </form>
 
-                    <td>
+            </td>
 
-                        {{ $p->keterangan ?? '-' }}
+        </tr>
 
-                    </td>
+        @empty
 
+        <tr>
 
+            <td colspan="5" style="text-align:center;">
 
-                    <td>
+                Data paket belum tersedia.
 
+            </td>
 
-                        <a href="{{ route('paket.edit',$p->id) }}"
-                           class="btn btn-warning btn-sm">
+        </tr>
 
-                           ✏️ Edit
+        @endforelse
 
-                        </a>
+        </tbody>
 
+    </table>
 
+</div>
 
-                        <form action="{{ route('paket.destroy',$p->id) }}"
-                              method="POST"
-                              class="d-inline"
-                              onsubmit="return confirm('Yakin hapus paket ini?')">
-
-
-                            @csrf
-                            @method('DELETE')
-
-
-                            <button class="btn btn-danger btn-sm">
-
-                                🗑️ Hapus
-
-                            </button>
-
-
-                        </form>
-
-
-                    </td>
-
-
-                </tr>
-
-
-            @endforeach
-
-
-
-
-
-            @if($pakets->isEmpty())
-
-
-                <tr>
-
-                    <td colspan="5" class="text-center text-muted">
-
-                        Belum ada data paket
-
-                    </td>
-
-                </tr>
-
-
-            @endif
-
-
-
-            </tbody>
-
-
-        </table>
-
-
-    </div>
-
-
-
-</body>
-</html>
+@endsection

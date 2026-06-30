@@ -1,174 +1,49 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
+@extends('layouts.app')
 
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+@section('title', 'Tambah Paket')
 
-    <title>Tambah Paket Laundry</title>
+@section('page-title', 'Tambah Paket Laundry')
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+@section('content')
 
+<div class="box">
 
-    <style>
+    <h2>🧺 Tambah Paket Laundry</h2>
 
-        body {
-            background-color: #ffe6f2;
-        }
+    <form action="{{ route('paket.store') }}" method="POST">
 
+        @csrf
 
-        h2 {
-            color: #ff1493;
-            font-weight: bold;
-        }
+        <div style="margin-bottom:15px;">
 
+            <label>Jenis Paket</label><br>
 
-        .btn-pink {
+            <input type="text" name="jenis" style="width:100%;padding:10px;border:1px solid #ddd;border-radius:8px;" required>
 
-            background-color: #ff4fa3;
-            border: none;
-            color: white;
+        </div>
 
-        }
+        <div style="margin-bottom:15px;">
 
+            <label>Nama Paket</label><br>
 
-        .btn-pink:hover {
+            <input type="text" name="nama_paket" style="width:100%;padding:10px;border:1px solid #ddd;border-radius:8px;" required>
 
-            background-color: #e60073;
-            color: white;
+        </div>
 
-        }
+        <div style="margin-bottom:20px;">
 
+            <label>Harga</label><br>
 
-        .form-control:focus {
+            <input type="number" name="harga" style="width:100%;padding:10px;border:1px solid #ddd;border-radius:8px;" required>
 
-            border-color: #ff4fa3;
-            box-shadow: 0 0 0 0.2rem rgba(255,79,163,0.25);
+        </div>
 
-        }
+        <button type="submit" class="btn">Simpan</button>
 
+        <a href="{{ route('paket.index') }}" class="btn">Kembali</a>
 
-        .card {
+    </form>
 
-            border-radius: 15px;
-            border: none;
-            box-shadow: 0 5px 15px rgba(255,20,147,0.2);
+</div>
 
-        }
-
-
-    </style>
-
-
-</head>
-
-
-<body class="container mt-5 mb-5">
-
-
-    <h2 class="mb-4">
-        🧺 Tambah Paket Laundry
-    </h2>
-
-
-
-    <a href="{{ route('paket.index') }}"
-       class="btn btn-secondary mb-4">
-
-        ← Kembali ke Daftar
-
-    </a>
-
-
-
-
-    <div class="card p-4">
-
-
-        <form action="{{ route('paket.store') }}" method="POST">
-
-            @csrf
-
-
-
-            <div class="mb-3">
-
-
-                <label class="form-label">
-                    Nama Paket
-                </label>
-
-
-                <input type="text"
-                       name="nama_paket"
-                       class="form-control"
-                       placeholder="Contoh: Cuci Kering"
-                       required>
-
-
-            </div>
-
-
-
-
-
-            <div class="mb-3">
-
-
-                <label class="form-label">
-                    Harga per Kg (Rp)
-                </label>
-
-
-                <input type="number"
-                       name="harga"
-                       min="0"
-                       class="form-control"
-                       placeholder="Masukkan harga"
-                       required>
-
-
-            </div>
-
-
-
-
-
-            <div class="mb-4">
-
-
-                <label class="form-label">
-                    Keterangan
-                </label>
-
-
-                <textarea name="keterangan"
-                          class="form-control"
-                          rows="3"
-                          placeholder="Bisa dikosongkan"></textarea>
-
-
-            </div>
-
-
-
-
-
-            <button type="submit"
-                    class="btn btn-pink w-100 py-2">
-
-                💾 Simpan Paket
-
-            </button>
-
-
-
-        </form>
-
-
-    </div>
-
-
-
-</body>
-</html>
+@endsection
