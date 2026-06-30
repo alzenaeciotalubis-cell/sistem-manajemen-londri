@@ -1,278 +1,241 @@
 <!DOCTYPE html>
-
-
-<html lang="id">
-
-<head>
-
-<meta charset="UTF-8">
-
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Sistem Manajemen Laundry</title>
-
-<style>
-
-*{
-
-    margin:0;
-
-    padding:0;
-
-    box-sizing:border-box;
-
-    font-family:'Segoe UI',sans-serif;
-
-}
-
-body{
-
-    background:#f4f7fc;
-
-}
-
-.sidebar{
-
-    width:250px;
-
-    height:100vh;
-
-    background:linear-gradient(180deg,#2563eb,#1e40af);
-
-    position:fixed;
-
-    color:white;
-
-    padding:20px;
-
-}
-
-.logo{
-
-    text-align:center;
-
-    margin-bottom:40px;
-
-}
-
-.logo h2{
-
-    font-size:24px;
-
-}
-
-.menu{
-
-    list-style:none;
-
-}
-
-.menu li{
-
-    padding:15px;
-
-    margin:10px 0;
-
-    border-radius:10px;
-
-    cursor:pointer;
-
-    transition:0.3s;
-
-}
-
-.menu li:hover{
-
-    background:rgba(255,255,255,0.2);
-
-}
-
-.main{
-
-    margin-left:250px;
-
-    padding:30px;
-
-}
-
-.navbar{
-
-    background:white;
-
-    padding:20px;
-
-    border-radius:15px;
-
-    box-shadow:0 2px 10px rgba(0,0,0,0.1);
-
-    display:flex;
-
-    justify-content:space-between;
-
-    align-items:center;
-
-}
-
-.cards{
-
-    display:grid;
-
-    grid-template-columns:repeat(4,1fr);
-
-    gap:20px;
-
-    margin-top:30px;
-
-}
-
-.card{
-
-    background:white;
-
-    padding:25px;
-
-    border-radius:15px;
-
-    box-shadow:0 2px 10px rgba(0,0,0,0.1);
-
-}
-
-.card h3{
-
-    color:#666;
-
-    margin-bottom:10px;
-
-}
-
-.card p{
-
-    font-size:30px;
-
-    font-weight:bold;
-
-}
-
-.blue{color:#2563eb;}
-
-.green{color:#16a34a;}
-
-.orange{color:#ea580c;}
-
-.red{color:#dc2626;}
-
-.table-box{
-
-    background:white;
-
-    margin-top:30px;
-
-    padding:20px;
-
-    border-radius:15px;
-
-    box-shadow:0 2px 10px rgba(0,0,0,0.1);
-
-}
-
-table{
-
-    width:100%;
-
-    border-collapse:collapse;
-
-}
-
-th,td{
-
-    padding:12px;
-
-    border-bottom:1px solid #ddd;
-
-    text-align:left;
-
-}
-
-th{
-
-    background:#2563eb;
-
-    color:white;
-
-}
-
-</style>
-=======
 <html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sistem Manajemen Laundry</title>
+    <title>Dashboard Admin | LaundryKu</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
+
     <style>
-        body {
-            background-color: #fff5f9;
-            min-height: 100vh;
-            margin: 0;
-            padding: 0;
+
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family:Arial, Helvetica, sans-serif;
         }
 
-        .judul-utama {
-            color: #d63384;
-            font-weight: 700;
-            font-size: 2.2rem;
+        body{
+            background:#eef5f9;
         }
 
-        .sub-judul {
-            color: #994477;
-            font-size: 1.1rem;
-        }
+        .sidebar{
 
-        .card-menu {
-            border: none;
-            border-radius: 16px;
-            box-shadow: 0 4px 12px rgba(214,51,132,0.15);
-            transition: 0.3s;
-            background: white;
-            height: 100%;
-        }
-
-        .card-menu:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 20px rgba(214,51,132,0.25);
-        }
-
-        .btn-pelanggan {
-            background:#ff8fab;
+            position:fixed;
+            width:250px;
+            height:100vh;
+            background:#0b7f62;
             color:white;
+            left:0;
+            top:0;
+            padding:25px;
+        }
+
+        .logo{
+
+            text-align:center;
+            margin-bottom:40px;
+        }
+
+        .logo h2{
+
+            font-weight:bold;
+        }
+
+        .logo p{
+
+            font-size:13px;
+            opacity:.8;
+        }
+
+        .menu{
+
+            list-style:none;
+            padding:0;
+        }
+
+        .menu li{
+
+            margin:10px 0;
+        }
+
+        .menu li a{
+
+            color:white;
+            text-decoration:none;
+            display:block;
+            padding:12px 15px;
+            border-radius:10px;
+            transition:.3s;
+        }
+
+        .menu li a:hover{
+
+            background:#17a37f;
+        }
+
+        .menu .active{
+
+            background:white;
+            color:#0b7f62;
+            font-weight:bold;
+        }
+
+        .main{
+
+            margin-left:250px;
+            padding:30px;
+        }
+
+        .navbar-custom{
+
+            background:white;
+            border-radius:15px;
+            padding:20px 30px;
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            box-shadow:0 5px 15px rgba(0,0,0,.08);
+        }
+
+        .navbar-custom h3{
+
+            margin-bottom:5px;
+            font-weight:bold;
+        }
+
+        .navbar-custom p{
+
+            color:gray;
+            margin:0;
+        }
+
+        .profile{
+
+            display:flex;
+            align-items:center;
+            gap:15px;
+        }
+
+        .profile i{
+
+            font-size:22px;
+            color:#555;
+        }
+
+        .avatar{
+
+            width:45px;
+            height:45px;
+            background:#0b7f62;
+            color:white;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            border-radius:50%;
+            font-weight:bold;
+        }
+
+        .card-dashboard{
+
+            margin-top:30px;
+        }
+
+        .stat-card{
+
             border:none;
-        }
-
-        .btn-paket {
-            background:#f06595;
+            border-radius:18px;
             color:white;
-            border:none;
+            padding:25px;
+            box-shadow:0 10px 20px rgba(0,0,0,.08);
+            transition:.3s;
         }
 
-        .btn-transaksi {
-            background:#d63384;
+        .stat-card:hover{
+
+            transform:translateY(-5px);
+        }
+
+        .card1{
+
+            background:linear-gradient(135deg,#14b38a,#0b7f62);
+        }
+
+        .card2{
+
+            background:linear-gradient(135deg,#37c978,#1d9f5d);
+        }
+
+        .card3{
+
+            background:linear-gradient(135deg,#5c7cfa,#3b5bdb);
+        }
+
+        .stat-card h6{
+
+            font-size:15px;
+        }
+
+        .stat-card h2{
+
+            margin-top:15px;
+            font-weight:bold;
+        }
+
+        .content-box{
+
+            background:white;
+            border-radius:18px;
+            margin-top:30px;
+            padding:25px;
+            box-shadow:0 5px 15px rgba(0,0,0,.08);
+        }
+
+        table{
+
+            width:100%;
+        }
+
+        table th{
+
+            background:#0b7f62;
             color:white;
-            border:none;
+            padding:12px;
         }
 
-        .btn-pelanggan:hover,
-        .btn-paket:hover,
-        .btn-transaksi:hover {
+        table td{
+
+            padding:12px;
+            border-bottom:1px solid #eee;
+        }
+
+        .badge-success{
+
+            background:#28a745;
             color:white;
+            padding:6px 12px;
+            border-radius:20px;
         }
 
-        .icon-besar {
-            font-size:2.5rem;
-            margin-bottom:1rem;
-            color:#d63384;
+        .badge-warning{
+
+            background:#ffc107;
+            color:black;
+            padding:6px 12px;
+            border-radius:20px;
         }
+
+        .badge-primary{
+
+            background:#0d6efd;
+            color:white;
+            padding:6px 12px;
+            border-radius:20px;
+        }
+
     </style>
 
 </head>
@@ -283,23 +246,69 @@ th{
 
     <div class="logo">
 
-        <h2>🧺 LaundryApp</h2>
+        <h2>🧺 LaundryKu</h2>
+
+        <p>Sistem Manajemen Laundry</p>
 
     </div>
 
     <ul class="menu">
 
-        <li>🏠 Dashboard</li>
+        <li>
+            <a href="#" class="active">
+                <i class="fas fa-house"></i>
+                Beranda
+            </a>
+        </li>
 
-        <li>👥 Pelanggan</li>
+        <li>
+            <a href="{{ route('pelanggan.index') }}">
+                <i class="fas fa-users"></i>
+                Pelanggan
+            </a>
+        </li>
 
-        <li>🧴 Layanan</li>
+        <li>
+            <a href="{{ route('paket.index') }}">
+                <i class="fas fa-shirt"></i>
+                Paket Laundry
+            </a>
+        </li>
 
-        <li>📦 Transaksi</li>
+        <li>
+            <a href="{{ route('transaksi.index') }}">
+                <i class="fas fa-box"></i>
+                Transaksi
+            </a>
+        </li>
 
-        <li>👤 User</li>
+        <li>
+            <a href="#">
+                <i class="fas fa-money-bill-wave"></i>
+                Pengeluaran
+            </a>
+        </li>
 
-        <li>🚪 Logout</li>
+        <li>
+            <a href="#">
+                <i class="fas fa-chart-column"></i>
+                Laporan
+            </a>
+        </li>
+
+        <li>
+            <a href="#">
+                <i class="fas fa-user"></i>
+                Profil
+            </a>
+        </li>
+
+        <li>
+            <a href="#">
+                <i class="fas fa-right-from-bracket"></i>
+                Logout
+            </a>
+        </li>
 
     </ul>
 
@@ -307,105 +316,215 @@ th{
 
 <div class="main">
 
-    <div class="navbar">
+    <div class="navbar-custom">
 
-        <h2>Dashboard Admin</h2>
+        <div>
 
-        <h3>Selamat Datang, Admin</h3>
+            <h3>Dashboard Admin</h3>
 
-    </div>
-
-    <div class="cards">
-
-        <div class="card">
-
-            <h3>Total Pelanggan</h3>
-
-            <p class="blue">120</p>
+            <p>Kelola layanan laundry Anda dengan mudah dan cepat.</p>
 
         </div>
 
-        <div class="card">
+        <div class="profile">
 
-            <h3>Total Transaksi</h3>
+            <i class="fas fa-bell"></i>
 
-            <p class="green">350</p>
+            <div class="avatar">
 
-        </div>
+                AD
 
-        <div class="card">
-
-            <h3>Cucian Diproses</h3>
-
-            <p class="orange">45</p>
-
-        </div>
-
-        <div class="card">
-
-            <h3>Pendapatan</h3>
-
-            <p class="red">Rp 8.500.000</p>
+            </div>
 
         </div>
 
     </div>
 
-    <div class="table-box">
+    <div class="row card-dashboard">
 
-        <h2>Transaksi Terbaru</h2>
+        <div class="col-md-4">
 
-        <br>
+            <div class="stat-card card1">
 
-        <table>
+                <h6>Pendapatan Bulan Ini</h6>
 
-            <tr>
+                <h2>Rp108.000</h2>
 
-                <th>No</th>
+            </div>
 
-                <th>Nama Pelanggan</th>
+        </div>
 
-                <th>Layanan</th>
+        <div class="col-md-4">
 
-                <th>Status</th>
+            <div class="stat-card card2">
 
-            </tr>
+                <h6>Pendapatan Bersih</h6>
 
-            <tr>
+                <h2>Rp6.276.327</h2>
 
-                <td>1</td>
+            </div>
 
-                <td>Budi</td>
+        </div>
 
-                <td>Cuci Kering</td>
+        <div class="col-md-4">
 
-                <td>Selesai</td>
+            <div class="stat-card card3">
 
-            </tr>
+                <h6>Total Keuntungan</h6>
 
-            <tr>
+                <h2>Rp6.276.327</h2>
 
-                <td>2</td>
+            </div>
 
-                <td>Siti</td>
+        </div>
 
-                <td>Cuci Setrika</td>
+    </div>
+        <div class="row">
 
-                <td>Proses</td>
+        <!-- Grafik Pendapatan -->
+        <div class="col-lg-8">
 
-            </tr>
+            <div class="content-box">
 
-            <tr>
+                <h4 class="mb-4">
+                    Grafik Pendapatan
+                </h4>
 
-                <td>3</td>
+                <canvas id="pendapatanChart" height="110"></canvas>
 
-                <td>Andi</td>
+            </div>
 
-                <td>Setrika</td>
+        </div>
 
-                <td>Diambil</td>
+        <!-- Performa -->
+        <div class="col-lg-4">
 
-            </tr>
+            <div class="content-box">
+
+                <h4 class="mb-4">
+                    Performa Transaksi
+                </h4>
+
+                <canvas id="statusChart"></canvas>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- TABEL -->
+
+    <div class="content-box">
+
+        <div class="d-flex justify-content-between align-items-center mb-3">
+
+            <h4>Transaksi Terbaru</h4>
+
+            <button class="btn btn-success">
+
+                Lihat Semua
+
+            </button>
+
+        </div>
+
+        <table class="table table-hover align-middle">
+
+            <thead>
+
+                <tr>
+
+                    <th>No</th>
+
+                    <th>Pelanggan</th>
+
+                    <th>Paket</th>
+
+                    <th>Status</th>
+
+                    <th>Total</th>
+
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+                <tr>
+
+                    <td>1</td>
+
+                    <td>Zena</td>
+
+                    <td>Cuci Kering</td>
+
+                    <td>
+                        <span class="badge bg-success">
+                            Selesai
+                        </span>
+                    </td>
+
+                    <td>Rp50.000</td>
+
+                </tr>
+
+                <tr>
+
+                    <td>2</td>
+
+                    <td>Rai</td>
+
+                    <td>Cuci Setrika</td>
+
+                    <td>
+                        <span class="badge bg-warning text-dark">
+                            Diproses
+                        </span>
+                    </td>
+
+                    <td>Rp75.000</td>
+
+                </tr>
+
+                <tr>
+
+                    <td>3</td>
+
+                    <td>Gabi</td>
+
+                    <td>Setrika</td>
+
+                    <td>
+                        <span class="badge bg-primary">
+                            Diambil
+                        </span>
+                    </td>
+
+                    <td>Rp40.000</td>
+
+                </tr>
+
+                <tr>
+
+                    <td>4</td>
+
+                    <td>Ayu</td>
+
+                    <td>Express</td>
+
+                    <td>
+                        <span class="badge bg-success">
+                            Selesai
+                        </span>
+                    </td>
+
+                    <td>Rp90.000</td>
+
+                </tr>
+
+            </tbody>
 
         </table>
 
@@ -413,107 +532,102 @@ th{
 
 </div>
 
-</body>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-=======
-<div class="container mt-5 mb-5">
+<script>
 
-    <div class="text-center mb-5">
+const ctx = document.getElementById('pendapatanChart');
 
-        <h1 class="judul-utama">
-            ✨ SISTEM MANAJEMEN LAUNDRY ✨
-        </h1>
+new Chart(ctx, {
 
-        <p class="sub-judul">
-            Kelola data pelanggan, paket layanan, dan transaksi dengan mudah
-        </p>
+    type: 'line',
 
-    </div>
+    data: {
 
+        labels: [
+            'Jan',
+            'Feb',
+            'Mar',
+            'Apr',
+            'Mei',
+            'Jun'
+        ],
 
-    <div class="row g-4">
+        datasets: [{
 
+            label: 'Pendapatan',
 
-        <div class="col-md-4">
+            data: [
+                10,
+                20,
+                18,
+                30,
+                45,
+                60
+            ],
 
-            <div class="card card-menu p-4 text-center">
+            borderColor: '#0b7f62',
 
-                <div class="icon-besar">
-                    👤
-                </div>
+            backgroundColor: 'rgba(11,127,98,.15)',
 
-                <h3>Data Pelanggan</h3>
+            fill: true,
 
-                <p class="text-muted">
-                    Tambah, lihat, edit dan hapus pelanggan
-                </p>
+            tension: .4
 
-                <a href="{{ route('pelanggan.index') }}"
-                class="btn btn-pelanggan w-100">
-                    Buka Menu
-                </a>
+        }]
 
-            </div>
+    }
 
-        </div>
-
-
-
-        <div class="col-md-4">
-
-            <div class="card card-menu p-4 text-center">
-
-                <div class="icon-besar">
-                    🧺
-                </div>
-
-                <h3>Data Paket</h3>
-
-                <p class="text-muted">
-                    Kelola jenis layanan laundry
-                </p>
-
-                <a href="{{ route('paket.index') }}"
-                class="btn btn-paket w-100">
-                    Buka Menu
-                </a>
-
-            </div>
-
-        </div>
+});
 
 
+const pie = document.getElementById('statusChart');
 
+new Chart(pie, {
 
-        <div class="col-md-4">
+    type: 'doughnut',
 
-            <div class="card card-menu p-4 text-center">
+    data: {
 
-                <div class="icon-besar">
-                    🧾
-                </div>
+        labels: [
 
-                <h3>Transaksi</h3>
+            'Selesai',
 
-                <p class="text-muted">
-                    Catat transaksi laundry
-                </p>
+            'Diproses',
 
-                <a href="{{ route('transaksi.index') }}"
-                class="btn btn-transaksi w-100">
-                    Buka Menu
-                </a>
+            'Diambil'
 
-            </div>
+        ],
 
-        </div>
+        datasets: [{
 
+            data: [
 
-    </div>
+                60,
 
+                25,
 
-</div>
+                15
 
+            ],
+
+            backgroundColor: [
+
+                '#0b7f62',
+
+                '#ffc107',
+
+                '#0d6efd'
+
+            ]
+
+        }]
+
+    }
+
+});
+
+</script>
 
 </body>
 

@@ -1,112 +1,158 @@
 @extends('layouts.app')
 
-@section('title', 'Data Paket')
+@section('title','Paket Laundry')
 
-@section('page-title', 'Data Paket Laundry')
+@section('page-title','Paket Laundry')
 
 @section('content')
 
-<div class="box">
+<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:25px;">
 
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
+    <div>
 
-        <h2>🧺 Data Paket Laundry</h2>
+        <h2>Manajemen Paket Laundry</h2>
 
-        <a href="{{ route('paket.create') }}" class="btn">
+        <small style="color:gray;">
 
-            + Tambah Paket
+            Kelola semua paket laundry.
 
-        </a>
+        </small>
 
     </div>
 
-    @if(session('success'))
+    <a href="{{ route('paket.create') }}" class="btn">
 
-        <div style="background:#d1fae5;color:#065f46;padding:12px;border-radius:8px;margin-bottom:15px;">
+        <i class="fa fa-plus"></i> Tambah Paket
 
-            {{ session('success') }}
+    </a>
 
-        </div>
+</div>
 
-    @endif
+<div class="cards">
 
-    <table>
+    <div class="card">
 
-        <thead>
+        <h3>Total Paket</h3>
 
-            <tr>
+        <h1>{{ $pakets->count() }}</h1>
 
-                <th>No</th>
+        <p>Semua paket</p>
 
-                <th>Jenis</th>
+    </div>
 
-                <th>Nama Paket</th>
+    <div class="card">
 
-                <th>Harga</th>
+        <h3>Paket Aktif</h3>
 
-                <th>Aksi</th>
+        <h1>{{ $pakets->count() }}</h1>
 
-            </tr>
+        <p>Tersedia</p>
 
-        </thead>
+    </div>
 
-        <tbody>
+    <div class="card">
 
-        @forelse($pakets as $item)
+        <h3>Harga Termurah</h3>
 
-        <tr>
+        <h1>Rp {{ number_format($pakets->min('harga') ?? 0,0,',','.') }}</h1>
 
-            <td>{{ $loop->iteration }}</td>
+    </div>
 
-            <td>{{ $item->jenis }}</td>
+    <div class="card">
 
-            <td>{{ $item->nama_paket }}</td>
+        <h3>Harga Tertinggi</h3>
 
-            <td>Rp {{ number_format($item->harga) }}</td>
+        <h1>Rp {{ number_format($pakets->max('harga') ?? 0,0,',','.') }}</h1>
 
-            <td>
+    </div>
 
-                <a href="{{ route('paket.edit',$item->id) }}" class="btn">
+</div>
 
-                    Edit
+<div class="table-box">
 
-                </a>
+<table>
 
-                <form action="{{ route('paket.destroy',$item->id) }}" method="POST" style="display:inline;">
+<thead>
 
-                    @csrf
+<tr>
 
-                    @method('DELETE')
+<th>No</th>
 
-                    <button class="btn" onclick="return confirm('Hapus data?')">
+<th>Nama Paket</th>
 
-                        Hapus
+<th>Harga</th>
 
-                    </button>
+<th>Aksi</th>
 
-                </form>
+</tr>
 
-            </td>
+</thead>
 
-        </tr>
+<tbody>
 
-        @empty
+@forelse($pakets as $paket)
 
-        <tr>
+<tr>
 
-            <td colspan="5" style="text-align:center;">
+<td>{{ $loop->iteration }}</td>
 
-                Data paket belum tersedia.
+<td>{{ $paket->nama_paket }}</td>
 
-            </td>
+<td>
 
-        </tr>
+Rp {{ number_format($paket->harga,0,',','.') }}
 
-        @endforelse
+</td>
 
-        </tbody>
+<td>
 
-    </table>
+<a href="{{ route('paket.edit',$paket->id) }}" class="btn">
+
+Edit
+
+</a>
+
+<form action="{{ route('paket.destroy',$paket->id) }}"
+
+      method="POST"
+
+      style="display:inline;">
+
+@csrf
+
+@method('DELETE')
+
+<button class="btn"
+
+onclick="return confirm('Hapus paket ini?')">
+
+Hapus
+
+</button>
+
+</form>
+
+</td>
+
+</tr>
+
+@empty
+
+<tr>
+
+<td colspan="4" style="text-align:center">
+
+Belum ada data paket.
+
+</td>
+
+</tr>
+
+@endforelse
+
+</tbody>
+
+</table>
 
 </div>
 

@@ -1,54 +1,100 @@
 @extends('layouts.app')
 
-@section('title', 'Tambah Pelanggan')
+@section('title','Tambah Pelanggan')
 
-@section('page-title', 'Tambah Pelanggan')
+@section('page-title','Tambah Pelanggan')
 
 @section('content')
 
-<div class="box">
+<div class="table-box">
 
-    <h2>➕ Tambah Pelanggan</h2>
+    <div style="margin-bottom:25px;">
+
+        <h2>Tambah Data Pelanggan</h2>
+
+        <small style="color:gray;">
+
+            Silakan isi data pelanggan dengan lengkap.
+
+        </small>
+
+    </div>
 
     <form action="{{ route('pelanggan.store') }}" method="POST">
 
         @csrf
 
-        <div style="margin-bottom:15px;">
+        <div style="margin-bottom:20px;">
 
-            <label>Nama Pelanggan</label><br>
+            <label>Nama Pelanggan</label>
 
-            <input type="text" name="nama" class="form-control" style="width:100%;padding:10px;border:1px solid #ddd;border-radius:8px;" required>
+            <input
 
-        </div>
+                type="text"
 
-        <div style="margin-bottom:15px;">
+                name="nama"
 
-            <label>No HP</label><br>
+                class="form-control"
 
-            <input type="text" name="no_hp" class="form-control" style="width:100%;padding:10px;border:1px solid #ddd;border-radius:8px;" required>
+                placeholder="Masukkan nama pelanggan"
+
+                required>
 
         </div>
 
         <div style="margin-bottom:20px;">
 
-            <label>Alamat</label><br>
+            <label>No HP</label>
 
-            <textarea name="alamat" rows="4" style="width:100%;padding:10px;border:1px solid #ddd;border-radius:8px;" required></textarea>
+            <input
+
+                type="text"
+
+                name="telepon"
+
+                class="form-control"
+
+                placeholder="08xxxxxxxxxx"
+
+                required>
 
         </div>
 
-        <button type="submit" class="btn">
+        <div style="margin-bottom:20px;">
 
-            Simpan
+            <label>Alamat</label>
 
-        </button>
+            <textarea
 
-        <a href="{{ route('pelanggan.index') }}" class="btn">
+                name="alamat"
 
-            Kembali
+                rows="4"
 
-        </a>
+                class="form-control"
+
+                placeholder="Masukkan alamat pelanggan"
+
+                required></textarea>
+
+        </div>
+
+        <div>
+
+            <button class="btn">
+
+                <i class="fa fa-save"></i>
+
+                Simpan
+
+            </button>
+
+            <a href="{{ route('pelanggan.index') }}" class="btn" style="background:#6c757d;">
+
+                Kembali
+
+            </a>
+
+        </div>
 
     </form>
 

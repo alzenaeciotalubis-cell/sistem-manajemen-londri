@@ -1,118 +1,162 @@
 @extends('layouts.app')
 
-@section('title', 'Data Pelanggan')
+@section('title','Data Pelanggan')
 
-@section('page-title', 'Data Pelanggan')
+@section('page-title','Data Pelanggan')
 
 @section('content')
 
-<div class="box">
+<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:25px;">
 
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
+    <div>
 
-        <h2>👥 Data Pelanggan</h2>
+        <h2>Manajemen Pelanggan</h2>
 
-        <a href="{{ route('pelanggan.create') }}" class="btn">
+        <small style="color:gray;">
 
-            + Tambah Pelanggan
+            Kelola seluruh data pelanggan laundry
 
-        </a>
+        </small>
 
     </div>
 
-    @if(session('success'))
+    <a href="{{ route('pelanggan.create') }}" class="btn">
 
-        <div style="background:#d1fae5;color:#065f46;padding:12px;border-radius:8px;margin-bottom:15px;">
+        <i class="fa fa-plus"></i> Tambah Pelanggan
 
-            {{ session('success') }}
+    </a>
 
-        </div>
+</div>
 
-    @endif
+<div class="cards">
 
-    <table>
+    <div class="card">
 
-        <thead>
+        <h3>Total Pelanggan</h3>
 
-            <tr>
+        <h1>{{ $data->count() }}</h1>
 
-                <th>No</th>
+        <p>Semua pelanggan</p>
 
-                <th>Nama</th>
+    </div>
 
-                <th>No HP</th>
+    <div class="card">
 
-                <th>Alamat</th>
+        <h3>Pelanggan Aktif</h3>
 
-                <th>Aksi</th>
+        <h1>{{ $data->count() }}</h1>
 
-            </tr>
+        <p>Aktif</p>
 
-        </thead>
+    </div>
 
-        <tbody>
+    <div class="card">
 
-        @forelse($pelanggan as $item)
+        <h3>Pelanggan Baru</h3>
 
-            <tr>
+        <h1>{{ $data->take(5)->count() }}</h1>
 
-                <td>{{ $loop->iteration }}</td>
+        <p>Terbaru</p>
 
-                <td>{{ $item->nama }}</td>
+    </div>
 
-                <td>{{ $item->no_hp }}</td>
+    <div class="card">
 
-                <td>{{ $item->alamat }}</td>
+        <h3>Total Data</h3>
 
-                <td>
+        <h1>{{ $data->count() }}</h1>
 
-                    <a href="{{ route('pelanggan.edit',$item->id) }}" class="btn">
+        <p>Database</p>
 
-                        Edit
+    </div>
 
-                    </a>
+</div>
 
-                    <form action="{{ route('pelanggan.destroy',$item->id) }}"
+<div class="table-box">
 
-                          method="POST"
+<table>
 
-                          style="display:inline;">
+<thead>
 
-                        @csrf
+<tr>
 
-                        @method('DELETE')
+<th>No</th>
 
-                        <button class="btn"
+<th>Nama</th>
 
-                                onclick="return confirm('Yakin ingin menghapus data ini?')">
+<th>No HP</th>
 
-                            Hapus
+<th>Alamat</th>
 
-                        </button>
+<th>Aksi</th>
 
-                    </form>
+</tr>
 
-                </td>
+</thead>
 
-            </tr>
+<tbody>
 
-        @empty
+@forelse($data as $item)
 
-            <tr>
+<tr>
 
-                <td colspan="5" style="text-align:center;">
+<td>{{ $loop->iteration }}</td>
 
-                    Data pelanggan belum ada.
+<td>{{ $item->nama }}</td>
 
-                </td>
+<td>{{ $item->telepon }}</td>
 
-            </tr>
+<td>{{ $item->alamat }}</td>
 
-        @endforelse
+<td>
 
-        </tbody>
+<a href="{{ route('pelanggan.show',$item->id) }}" class="btn">
 
-    </table>
+Detail
+
+</a>
+
+<a href="{{ route('pelanggan.edit',$item->id) }}" class="btn">
+
+Edit
+
+</a>
+
+<form action="{{ route('pelanggan.destroy',$item->id) }}" method="POST" style="display:inline;">
+
+@csrf
+
+@method('DELETE')
+
+<button class="btn" onclick="return confirm('Hapus pelanggan ini?')">
+
+Hapus
+
+</button>
+
+</form>
+
+</td>
+
+</tr>
+
+@empty
+
+<tr>
+
+<td colspan="5" style="text-align:center">
+
+Belum ada data pelanggan
+
+</td>
+
+</tr>
+
+@endforelse
+
+</tbody>
+
+</table>
 
 </div>
 

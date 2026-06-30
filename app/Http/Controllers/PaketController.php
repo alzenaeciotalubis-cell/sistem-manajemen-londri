@@ -2,70 +2,50 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Paket;
 use Illuminate\Http\Request;
+use App\Models\Paket;
 
 class PaketController extends Controller
 {
     public function index()
     {
-        $pakets = Paket::latest()->get();
-
-        return view('paket.index', compact('pakets'));
+        $data = Paket::all();
+        return view('paket.index', compact('data'));
     }
-
 
     public function create()
     {
         return view('paket.create');
     }
 
-
     public function store(Request $request)
     {
-        $request->validate([
-            'nama_paket' => 'required|string',
-            'harga' => 'required|numeric|min:0'
-        ]);
-
         Paket::create($request->all());
-
-        return redirect()
-            ->route('paket.index')
-            ->with('sukses', 'Paket berhasil disimpan');
+        return redirect()->route('paket.index');
     }
 
-
-    public function edit(int $id)
+    public function show($id)
     {
-        $paket = Paket::findOrFail($id);
-
-        return view('paket.edit', compact('paket'));
+        $data = Paket::findOrFail($id);
+        return view('paket.show', compact('data'));
     }
 
-
-    public function update(Request $request, int $id)
+    public function edit($id)
     {
-        $request->validate([
-            'nama_paket' => 'required|string',
-            'harga' => 'required|numeric|min:0'
-        ]);
-
-        Paket::findOrFail($id)
-            ->update($request->all());
-
-        return redirect()
-            ->route('paket.index')
-            ->with('sukses', 'Paket berhasil diperbarui');
+        $data = Paket::findOrFail($id);
+        return view('paket.edit', compact('data'));
     }
 
+    public function update(Request $request, $id)
+    {
+        $data = Paket::findOrFail($id);
+        $data->update($request->all());
+        return redirect()->route('paket.index');
+    }
 
-    public function destroy(int $id)
+    public function destroy($id)
     {
         Paket::findOrFail($id)->delete();
-
-        return redirect()
-            ->route('paket.index')
-            ->with('sukses', 'Paket berhasil dihapus');
+        return redirect()->route('paket.index');
     }
 }

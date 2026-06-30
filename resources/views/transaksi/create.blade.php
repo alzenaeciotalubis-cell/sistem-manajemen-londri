@@ -18,17 +18,21 @@
 
             <label>👤 Nama Pelanggan</label>
 
-            <select name="pelanggan_id" class="form-control" required>
+<select name="pelanggan_id" class="form-control" required>
 
-                <option value="">-- Pilih Pelanggan --</option>
+    <option value="">-- Pilih Pelanggan --</option>
 
-                @foreach($pelanggan as $p)
+    @foreach($pelanggan as $pl)
 
-                    <option value="{{ $p->id }}">{{ $p->nama }}</option>
+        <option value="{{ $pl->id }}">
 
-                @endforeach
+            {{ $pl->nama }}
 
-            </select>
+        </option>
+
+    @endforeach
+
+</select>
 
         </div>
 

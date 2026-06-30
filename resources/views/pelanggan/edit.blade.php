@@ -1,48 +1,32 @@
 @extends('layouts.app')
 
-@section('title', 'Edit Pelanggan')
+@section('title','Edit Pelanggan')
 
-@section('page-title', 'Edit Pelanggan')
+@section('page-title','Edit Pelanggan')
 
 @section('content')
 
-<div class="box">
+<div class="table-box">
 
-    <h2>✏️ Edit Data Pelanggan</h2>
+    <h2 style="margin-bottom:25px;">Edit Data Pelanggan</h2>
 
-    <form action="{{ route('pelanggan.update', $pelanggan->id) }}" method="POST">
+    <form action="{{ route('pelanggan.update',$pelanggan->id) }}" method="POST">
 
         @csrf
 
         @method('PUT')
 
-        <div style="margin-bottom:15px;">
+        <div style="margin-bottom:20px;">
 
-            <label>Nama Pelanggan</label><br>
+            <label>Nama Pelanggan</label>
 
             <input type="text"
 
                    name="nama"
 
+                   class="form-control"
+
                    value="{{ $pelanggan->nama }}"
-
-                   style="width:100%;padding:10px;border:1px solid #ddd;border-radius:8px;"
-
-                   required>
-
-        </div>
-
-        <div style="margin-bottom:15px;">
-
-            <label>No HP</label><br>
-
-            <input type="text"
-
-                   name="no_hp"
-
-                   value="{{ $pelanggan->no_hp }}"
-
-                   style="width:100%;padding:10px;border:1px solid #ddd;border-radius:8px;"
 
                    required>
 
@@ -50,25 +34,41 @@
 
         <div style="margin-bottom:20px;">
 
-            <label>Alamat</label><br>
+            <label>No Telepon</label>
+
+            <input type="text"
+
+                   name="telepon"
+
+                   class="form-control"
+
+                   value="{{ $pelanggan->telepon }}"
+
+                   required>
+
+        </div>
+
+        <div style="margin-bottom:20px;">
+
+            <label>Alamat</label>
 
             <textarea name="alamat"
 
-                      rows="4"
+                      class="form-control"
 
-                      style="width:100%;padding:10px;border:1px solid #ddd;border-radius:8px;"
+                      rows="4"
 
                       required>{{ $pelanggan->alamat }}</textarea>
 
         </div>
 
-        <button type="submit" class="btn">
+        <button class="btn">
 
-            Update
+            <i class="fa fa-save"></i> Update
 
         </button>
 
-        <a href="{{ route('pelanggan.index') }}" class="btn">
+        <a href="{{ route('pelanggan.index') }}" class="btn" style="background:#6c757d;">
 
             Kembali
 

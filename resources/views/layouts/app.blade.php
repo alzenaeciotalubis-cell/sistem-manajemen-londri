@@ -4,439 +4,405 @@
 
 <head>
 
-<meta charset="UTF-8">
+    <meta charset="UTF-8">
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>@yield('title','Sistem Laundry')</title>
+    <title>@yield('title','LaundryKu')</title>
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet"
 
-<style>
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
-*{
+    <style>
 
-    margin:0;
+    *{
 
-    padding:0;
+        margin:0;
 
-    box-sizing:border-box;
+        padding:0;
 
-    font-family:'Segoe UI',sans-serif;
+        box-sizing:border-box;
 
-}
+        font-family:'Segoe UI',sans-serif;
 
-body{
+    }
 
-    display:flex;
+    body{
 
-    background:#f8f5f7;
+        background:#f5f7fb;
 
-    color:#444;
+        display:flex;
 
-}
+    }
 
-.sidebar{
+    .sidebar{
 
-    width:270px;
+        width:260px;
 
-    height:100vh;
+        height:100vh;
 
-    position:fixed;
+        position:fixed;
 
-    left:0;
+        left:0;
 
-    top:0;
+        top:0;
 
-    overflow-y:auto;
+        background:linear-gradient(180deg,#0b5d2a,#15803d);
 
-    background:linear-gradient(180deg,#ff4d94,#ff7eb3);
+        color:white;
 
-    color:#fff;
+        padding:25px 18px;
 
-    padding:25px;
+    }
 
-    box-shadow:5px 0 20px rgba(0,0,0,.1);
+    .logo{
 
-}
+        display:flex;
 
-.logo{
+        align-items:center;
 
-    text-align:center;
+        gap:10px;
 
-    margin-bottom:30px;
+        font-size:30px;
 
-    border-bottom:1px solid rgba(255,255,255,.2);
+        font-weight:bold;
 
-    padding-bottom:20px;
+        margin-bottom:35px;
 
-}
+    }
 
-.logo h2{
+    .logo span{
 
-    font-size:28px;
+        font-size:18px;
 
-    margin-bottom:5px;
+    }
 
-}
+    .menu-title{
 
-.logo p{
+        font-size:11px;
 
-    font-size:14px;
+        opacity:.7;
 
-    opacity:.8;
+        letter-spacing:2px;
 
-}
+        margin:25px 0 10px;
 
-.menu a{
+    }
 
-    display:flex;
+    .sidebar a{
 
-    align-items:center;
+        display:flex;
 
-    gap:12px;
+        align-items:center;
 
-    text-decoration:none;
+        gap:12px;
 
-    color:white;
+        color:white;
 
-    padding:14px 18px;
+        text-decoration:none;
 
-    margin-bottom:10px;
+        padding:14px 16px;
 
-    border-radius:12px;
+        border-radius:14px;
 
-    transition:.3s;
+        margin-bottom:8px;
 
-}
+        transition:.3s;
 
-.menu a:hover{
+    }
 
-    background:rgba(255,255,255,.2);
+    .sidebar a:hover,
 
-    transform:translateX(6px);
+    .sidebar a.active{
 
-}
+        background:rgba(255,255,255,.15);
 
-.menu i{
+    }
 
-    width:22px;
+    .main{
 
-    text-align:center;
+        margin-left:260px;
 
-}
+        width:calc(100% - 260px);
 
-.main{
+        padding:30px;
+        .topbar{
 
-    margin-left:270px;
+        background:#fff;
 
-    width:calc(100% - 270px);
+        border-radius:20px;
 
-    padding:35px;
+        padding:18px 25px;
 
-}
+        display:flex;
 
-.header{
+        justify-content:space-between;
 
-    background:white;
+        align-items:center;
 
-    padding:25px 30px;
+        box-shadow:0 8px 25px rgba(0,0,0,.08);
 
-    border-radius:18px;
+        margin-bottom:25px;
 
-    display:flex;
+    }
 
-    justify-content:space-between;
+    .page-title h1{
 
-    align-items:center;
+        font-size:34px;
 
-    box-shadow:0 8px 25px rgba(0,0,0,.08);
+        color:#222;
 
-    margin-bottom:30px;
+    }
 
-}
+    .page-title p{
 
-.header h2{
+        color:#777;
 
-    color:#ff4d94;
+        margin-top:5px;
 
-}
+    }
 
-.profile{
+    .right{
 
-    background:linear-gradient(45deg,#ff4d94,#ff80bf);
+        display:flex;
 
-    color:white;
+        align-items:center;
 
-    padding:15px 22px;
+        gap:20px;
 
-    border-radius:15px;
+    }
 
-    text-align:right;
+    .notif{
 
-}
+        position:relative;
 
-.content{
+        font-size:20px;
 
-    animation:fade .4s ease;
+        cursor:pointer;
 
-}
+    }
 
-@keyframes fade{
+    .notif span{
 
-from{
+        position:absolute;
 
-opacity:0;
+        top:-7px;
 
-transform:translateY(15px);
+        right:-7px;
 
-}
+        width:18px;
 
-to{
+        height:18px;
 
-opacity:1;
+        background:#22c55e;
 
-transform:translateY(0);
+        color:#fff;
 
-}
+        border-radius:50%;
 
-}
+        font-size:11px;
 
-.cards{
+        display:flex;
 
-display:grid;
+        justify-content:center;
 
-grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+        align-items:center;
 
-gap:20px;
+    }
 
-margin-bottom:30px;
+    .profile{
 
-}
+        display:flex;
 
-.card{
+        align-items:center;
 
-background:white;
+        gap:12px;
 
-border-radius:18px;
+    }
 
-padding:25px;
+    .avatar{
 
-box-shadow:0 8px 25px rgba(0,0,0,.06);
+        width:48px;
 
-border-top:5px solid #ff4d94;
+        height:48px;
 
-transition:.3s;
+        border-radius:50%;
 
-}
+        background:#22c55e;
 
-.card:hover{
+        color:#fff;
 
-transform:translateY(-6px);
+        display:flex;
 
-}
+        justify-content:center;
 
-.card h1{
+        align-items:center;
 
-font-size:35px;
+        font-weight:bold;
 
-color:#ff4d94;
+        font-size:18px;
 
-margin-bottom:10px;
+    }
 
-}
+    .cards{
 
-.card p{
+        display:grid;
 
-color:#666;
+        grid-template-columns:repeat(4,1fr);
 
-font-weight:600;
+        gap:20px;
 
-}
+        margin-bottom:25px;
 
-.box{
+    }
 
-background:white;
+    .card{
 
-padding:30px;
+        background:#fff;
 
-border-radius:18px;
+        border-radius:18px;
 
-box-shadow:0 8px 25px rgba(0,0,0,.06);
+        padding:22px;
 
-margin-bottom:30px;
+        box-shadow:0 8px 20px rgba(0,0,0,.08);
 
-}
+    }
 
-.box h2{
+    .card h3{
 
-margin-bottom:25px;
+        color:#666;
 
-color:#ff4d94;
+        font-size:16px;
 
-}
+        margin-bottom:10px;
 
-.form-group{
+    }
 
-margin-bottom:20px;
+    .card h1{
 
-}
+        font-size:36px;
 
-.form-group label{
+        color:#111;
 
-display:block;
+        margin-bottom:10px;
 
-font-weight:bold;
+    }
 
-margin-bottom:8px;
+    .card p{
 
-}
+        color:#22c55e;
 
-.form-control{
+        font-size:14px;
 
-width:100%;
+    }
+    box{
 
-padding:12px 15px;
+        background:#fff;
 
-border:1px solid #ddd;
+        border-radius:18px;
 
-border-radius:10px;
+        padding:25px;
 
-font-size:15px;
+        box-shadow:0 8px 20px rgba(0,0,0,.08);
 
-outline:none;
+    }
 
-transition:.3s;
+    .btn{
 
-}
+        background:#0f7a38;
 
-.form-control:focus{
+        color:#fff;
 
-border-color:#ff4d94;
+        padding:12px 18px;
 
-box-shadow:0 0 8px rgba(255,77,148,.2);
+        border-radius:10px;
 
-}
+        text-decoration:none;
 
-.btn{
+        display:inline-block;
 
-padding:12px 24px;
+    }
 
-border:none;
+    table{
 
-border-radius:10px;
+        width:100%;
 
-cursor:pointer;
+        border-collapse:collapse;
 
-font-size:15px;
+        margin-top:20px;
 
-font-weight:bold;
+    }
 
-text-decoration:none;
+    th,td{
 
-display:inline-block;
+        padding:15px;
 
-transition:.3s;
+        border-bottom:1px solid #eee;
 
-}
+        text-align:left;
 
-.btn-success{
+    }
 
-background:#22c55e;
+    th{
 
-color:white;
+        background:#f7f7f7;
 
-}
+    }
 
-.btn-success:hover{
+    .status{
 
-background:#16a34a;
+        background:#dcfce7;
 
-}
+        color:#15803d;
 
-.btn-secondary{
+        padding:6px 12px;
 
-background:#6b7280;
+        border-radius:20px;
 
-color:white;
+        font-size:13px;
 
-}
+    }
 
-.btn-secondary:hover{
+    .status-warning{
 
-background:#4b5563;
+        background:#fef3c7;
 
-}
+        color:#b45309;
 
-table{
+    }
 
-width:100%;
+    @media(max-width:1000px){
 
-border-collapse:collapse;
+        .cards{
 
-}
+            grid-template-columns:repeat(2,1fr);
 
-table th{
+        }
 
-background:#ff4d94;
+        .sidebar{
 
-color:white;
+            width:90px;
 
-padding:14px;
+        }
 
-}
+        .main{
 
-table td{
+            margin-left:90px;
 
-padding:14px;
+            width:calc(100% - 90px);
 
-border-bottom:1px solid #eee;
+        }
 
-}
+        .sidebar span{
 
-table tr:hover{
+            display:none;
 
-background:#fff3f8;
+        }
 
-}
+    }
 
-.status{
-
-padding:6px 12px;
-
-border-radius:20px;
-
-font-size:12px;
-
-font-weight:bold;
-
-}
-
-.status.proses{
-
-background:#ffe0ef;
-
-color:#d63384;
-
-}
-
-.status.selesai{
-
-background:#d1fae5;
-
-color:#047857;
-
-}
-
-.status.menunggu{
-
-background:#fef3c7;
-
-color:#b45309;
-
-}
-
-</style>
+    </style>
 
 </head>
 
@@ -444,126 +410,76 @@ color:#b45309;
 
 <div class="sidebar">
 
-<div class="logo">
+    <div class="logo">
 
-<h2><i class="fas fa-soap"></i> Londri Bubbles Q</h2>
+        <i class="fa-solid fa-soap"></i>
 
-<p>Admin Workspace</p>
+        <span>LaundryKu</span>
 
-</div>
+    </div>
 
-<div class="menu">
+    <div class="menu-title">MENU</div>
 
-<a href="{{ url('admin') }}">
+    <a href="{{ route('dashboard') }}"><i class="fa-solid fa-house"></i><span>Dashboard</span></a>
 
-<i class="fas fa-house"></i>
+    <a href="{{ route('pelanggan.index') }}"><i class="fa-solid fa-users"></i><span>Pelanggan</span></a>
 
-<span>Dashboard</span>
+    <a href="{{ route('paket.index') }}"><i class="fa-solid fa-box"></i><span>Paket Laundry</span></a>
 
-</a>
+    <a href="{{ route('transaksi.index') }}"><i class="fa-solid fa-receipt"></i><span>Transaksi</span></a>
 
-<a href="{{ url('pelanggan') }}">
+    <a href="{{ route('pengeluaran.index') }}"><i class="fa-solid fa-wallet"></i><span>Pengeluaran</span></a>
 
-<i class="fas fa-users"></i>
+    <a href="{{ route('laporan') }}"><i class="fa-solid fa-chart-line"></i><span>Laporan</span></a>
 
-<span>Data Pelanggan</span>
-
-</a>
-
-<a href="{{ url('paket') }}">
-
-<i class="fas fa-box-open"></i>
-
-<span>Data Layanan</span>
-
-</a>
-<a href="{{ url('transaksi') }}">
-
-    <i class="fas fa-receipt"></i>
-
-    <span>Data Transaksi</span>
-
-</a>
-
-<a href="{{ url('pembayaran') }}">
-
-    <i class="fas fa-credit-card"></i>
-
-    <span>Data Pembayaran</span>
-
-</a>
-
-<a href="{{ url('petugas') }}">
-
-    <i class="fas fa-user-tie"></i>
-
-    <span>Data Petugas</span>
-
-</a>
-
-<a href="{{ url('laporan') }}">
-
-    <i class="fas fa-chart-column"></i>
-
-    <span>Laporan Keuangan</span>
-
-</a>
-
-<a href="{{ url('logout') }}"
-
-   style="margin-top:30px;background:rgba(0,0,0,.15);">
-
-    <i class="fas fa-right-from-bracket"></i>
-
-    <span>Logout</span>
-
-</a>
-
-</div>
+    <a href="#"><i class="fa-solid fa-user"></i><span>Profil</span></a>
 
 </div>
 
 <div class="main">
 
-    <div class="header">
+    <div class="topbar">
 
-        <div>
+        <div class="page-title">
 
-            <h2>@yield('page-title','Dashboard')</h2>
+            <h1>@yield('page-title')</h1>
 
-            <p style="margin-top:6px;color:#777;">
-
-                Selamat datang di Sistem Manajemen Laundry
-
-            </p>
+            <p>Sistem Informasi Laundry</p>
 
         </div>
 
-        <div class="profile">
+        <div class="right">
 
-            <strong>
+            <div class="notif">
 
-                <i class="fas fa-user-circle"></i>
+                <i class="fa-solid fa-bell"></i>
 
-                Super Admin
+                <span>3</span>
 
-            </strong>
+            </div>
 
-            <br>
+            <div class="profile">
 
-            <small>ID : #001-Bubbles</small>
+                <div class="avatar">A</div>
+
+                <div>
+
+                    <b>Admin</b><br>
+
+                    <small>Super Admin</small>
+
+                </div>
+
+            </div>
 
         </div>
 
     </div>
 
-    <div class="content">
-
-        @yield('content')
-
-    </div>
+    @yield('content')
 
 </div>
+
 </body>
 
 </html>

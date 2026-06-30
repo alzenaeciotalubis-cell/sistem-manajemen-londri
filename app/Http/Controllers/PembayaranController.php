@@ -3,45 +3,49 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Pembayaran;
 
 class PembayaranController extends Controller
-
 {
-
-    // Menampilkan halaman Data Pembayaran
-
     public function index()
-
     {
-
-        $data_pembayaran = [];
-
-        return view('pembayaran.index', compact('data_pembayaran'));
-
+        $data = Pembayaran::all();
+        return view('pembayaran.index', compact('data'));
     }
 
-    // Menyimpan data pembayaran
+    public function create()
+    {
+        return view('pembayaran.create');
+    }
 
     public function store(Request $request)
-
     {
-
-        return redirect()->route('pembayaran.index')
-
-            ->with('sukses', 'Data pembayaran berhasil disimpan.');
-
+        Pembayaran::create($request->all());
+        return redirect()->route('pembayaran.index');
     }
 
-    // Menghapus data pembayaran
+    public function show($id)
+    {
+        $data = Pembayaran::findOrFail($id);
+        return view('pembayaran.show', compact('data'));
+    }
+
+    public function edit($id)
+    {
+        $data = Pembayaran::findOrFail($id);
+        return view('pembayaran.edit', compact('data'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $data = Pembayaran::findOrFail($id);
+        $data->update($request->all());
+        return redirect()->route('pembayaran.index');
+    }
 
     public function destroy($id)
-
     {
-
-        return redirect()->route('pembayaran.index')
-
-            ->with('sukses', 'Data pembayaran berhasil dihapus.');
-
+        Pembayaran::findOrFail($id)->delete();
+        return redirect()->route('pembayaran.index');
     }
-
 }

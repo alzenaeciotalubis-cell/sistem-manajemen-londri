@@ -2,72 +2,50 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Pelanggan;
 use Illuminate\Http\Request;
+use App\Models\Pelanggan;
 
 class PelangganController extends Controller
 {
     public function index()
     {
-        $pelanggan = Pelanggan::latest()->get();
-
-        return view('pelanggan.index', compact('pelanggan'));
+        $data = Pelanggan::all();
+        return view('pelanggan.index', compact('data'));
     }
-
 
     public function create()
     {
         return view('pelanggan.create');
     }
 
-
     public function store(Request $request)
     {
-        $request->validate([
-            'nama' => 'required|string',
-            'telepon' => 'required|string',
-            'alamat' => 'required|string'
-        ]);
-
         Pelanggan::create($request->all());
-
-        return redirect()
-            ->route('pelanggan.index')
-            ->with('sukses', 'Data berhasil disimpan');
+        return redirect()->route('pelanggan.index');
     }
 
-
-    public function edit(int $id)
+    public function show($id)
     {
-        $pelanggan = Pelanggan::findOrFail($id);
-
-        return view('pelanggan.edit', compact('pelanggan'));
+        $data = Pelanggan::findOrFail($id);
+        return view('pelanggan.show', compact('data'));
     }
 
-
-    public function update(Request $request, int $id)
+    public function edit($id)
     {
-        $request->validate([
-            'nama' => 'required|string',
-            'telepon' => 'required|string',
-            'alamat' => 'required|string'
-        ]);
-
-        Pelanggan::findOrFail($id)
-            ->update($request->all());
-
-        return redirect()
-            ->route('pelanggan.index')
-            ->with('sukses', 'Data berhasil diperbarui');
+        $data = Pelanggan::findOrFail($id);
+        return view('pelanggan.edit', compact('data'));
     }
 
+    public function update(Request $request, $id)
+    {
+        $data = Pelanggan::findOrFail($id);
+        $data->update($request->all());
+        return redirect()->route('pelanggan.index');
+    }
 
-    public function destroy(int $id)
+    public function destroy($id)
     {
         Pelanggan::findOrFail($id)->delete();
-
-        return redirect()
-            ->route('pelanggan.index')
-            ->with('sukses', 'Data berhasil dihapus');
+        return redirect()->route('pelanggan.index');
     }
 }

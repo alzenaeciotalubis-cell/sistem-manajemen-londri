@@ -2,141 +2,179 @@
 
 @section('title','Data Transaksi')
 
-@section('page-title','Data Transaksi Laundry')
+@section('page-title','Data Transaksi')
 
 @section('content')
 
-<div class="box">
+<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:25px;">
 
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
+    <div>
 
-        <h2>🧾 Daftar Transaksi Laundry</h2>
+        <h2>Manajemen Transaksi</h2>
 
-        <a href="{{ route('transaksi.create') }}" class="btn btn-success">
+        <small style="color:gray;">
 
-            + Tambah Transaksi
+            Kelola semua transaksi laundry.
 
-        </a>
+        </small>
 
     </div>
 
-    @if(session('sukses'))
+    <a href="{{ route('transaksi.create') }}" class="btn">
 
-        <div class="alert alert-success">
+        <i class="fa fa-plus"></i> Tambah Transaksi
 
-            {{ session('sukses') }}
+    </a>
 
-        </div>
+</div>
 
-    @endif
+<div class="cards">
 
-    <table>
+    <div class="card">
 
-        <thead>
+        <h3>Total Transaksi</h3>
 
-            <tr>
+        <h1>{{ $transaksis->count() }}</h1>
 
-                <th>No</th>
+        <p>Semua transaksi</p>
 
-                <th>Tanggal</th>
+    </div>
 
-                <th>Nama Pelanggan</th>
+    <div class="card">
 
-                <th>Paket</th>
+        <h3>Selesai</h3>
 
-                <th>Berat</th>
+        <h1>{{ $transaksis->where('status','Selesai')->count() }}</h1>
 
-                <th>Total Harga</th>
+        <p>Transaksi selesai</p>
 
-                <th>Status</th>
+    </div>
 
-                <th>Aksi</th>
+    <div class="card">
 
-            </tr>
+        <h3>Diproses</h3>
 
-        </thead>
+        <h1>{{ $transaksis->where('status','Diproses')->count() }}</h1>
 
-        <tbody>
+        <p>Sedang diproses</p>
 
-        @forelse($transaksi as $no => $t)
+    </div>
 
-        <tr>
+    <div class="card">
 
-            <td>{{ $no+1 }}</td>
+        <h3>Total Pendapatan</h3>
 
-            <td>{{ $t->created_at->format('d/m/Y H:i') }}</td>
+        <h1>
 
-            <td>{{ $t->pelanggan->nama ?? '-' }}</td>
+            Rp {{ number_format($transaksis->sum('total_bayar'),0,',','.') }}
 
-            <td>{{ $t->paket->nama_paket ?? '-' }}</td>
+        </h1>
 
-            <td>{{ $t->berat_kg }} Kg</td>
+    </div>
 
-            <td>Rp {{ number_format($t->total_harga,0,',','.') }}</td>
+</div>
 
-            <td>
+<div class="table-box">
 
-                @if($t->status=='proses')
+<table>
 
-                    <span class="status proses">Proses</span>
+<thead>
 
-                @elseif($t->status=='selesai')
+<tr>
 
-                    <span class="status selesai">Selesai</span>
+    <th>No</th>
 
-                @else
+    <th>Pelanggan</th>
 
-                    <span class="status menunggu">Diambil</span>
+    <th>Paket</th>
 
-                @endif
+    <th>Status</th>
 
-            </td>
+    <th>Total</th>
 
-            <td>
+    <th>Aksi</th>
 
-                <a href="{{ route('transaksi.edit',$t->id) }}" class="btn btn-warning btn-sm">
+</tr>
 
-                    Edit
+</thead>
 
-                </a>
+<tbody>
 
-                <form action="{{ route('transaksi.destroy',$t->id) }}" method="POST" style="display:inline">
+@forelse($transaksis as $item)
 
-                    @csrf
+<tr>
 
-                    @method('DELETE')
+<td>{{ $loop->iteration }}</td>
 
-                    <button class="btn btn-danger btn-sm"
+<td>{{ $item->pelanggan }}</td>
 
-                    onclick="return confirm('Yakin ingin menghapus?')">
+<td>{{ $item->paket }}</td>
 
-                        Hapus
+<td>
 
-                    </button>
+    <span class="status">
 
-                </form>
+        {{ $item->status }}
 
-            </td>
+    </span>
 
-        </tr>
+</td>
 
-        @empty
+<td>
 
-        <tr>
+    Rp {{ number_format($item->total_bayar,0,',','.') }}
 
-            <td colspan="8" style="text-align:center;">
+</td>
 
-                Belum ada data transaksi.
+<td>
 
-            </td>
+<a href="{{ route('transaksi.edit',$item->id) }}" class="btn">
 
-        </tr>
+Edit
 
-        @endforelse
+</a>
 
-        </tbody>
+<form action="{{ route('transaksi.destroy',$item->id) }}"
 
-    </table>
+method="POST"
+
+style="display:inline;">
+
+@csrf
+
+@method('DELETE')
+
+<button class="btn"
+
+onclick="return confirm('Yakin ingin menghapus?')">
+
+Hapus
+
+</button>
+
+</form>
+
+</td>
+
+</tr>
+
+@empty
+
+<tr>
+
+<td colspan="6" style="text-align:center;">
+
+Belum ada transaksi.
+
+</td>
+
+</tr>
+
+@endforelse
+
+</tbody>
+
+</table>
 
 </div>
 
