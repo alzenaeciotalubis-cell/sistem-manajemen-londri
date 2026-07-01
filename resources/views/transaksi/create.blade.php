@@ -1,132 +1,136 @@
 @extends('layouts.app')
 
 @section('title','Tambah Transaksi')
-
 @section('page-title','Tambah Transaksi')
 
 @section('content')
 
 <div class="box">
 
-    <h2>🧺 Tambah Transaksi Laundry</h2>
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:25px;">
+
+        <div>
+            <h2 style="margin-bottom:5px;">
+                <i class="fa-solid fa-plus-circle"></i>
+                Tambah Transaksi Laundry
+            </h2>
+
+            <p style="color:#777;">
+                Silakan isi data transaksi di bawah ini.
+            </p>
+        </div>
+
+        <a href="{{ route('transaksi.index') }}" class="btn">
+            <i class="fa-solid fa-arrow-left"></i>
+            Kembali
+        </a>
+
+    </div>
 
     <form action="{{ route('transaksi.store') }}" method="POST">
 
         @csrf
 
-        <div class="form-group">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
 
-            <label>👤 Nama Pelanggan</label>
+            <div>
 
-<select name="pelanggan_id" class="form-control" required>
+                <label><b>Nama Pelanggan</b></label>
 
-    <option value="">-- Pilih Pelanggan --</option>
+                <select name="pelanggan_id" class="form-control" required>
 
-    @foreach($pelanggan as $pl)
+                    <option value="">-- Pilih Pelanggan --</option>
 
-        <option value="{{ $pl->id }}">
+                    @foreach($pelanggan as $pl)
 
-            {{ $pl->nama }}
+                        <option value="{{ $pl->id }}">
+                            {{ $pl->nama }}
+                        </option>
 
-        </option>
+                    @endforeach
 
-    @endforeach
+                </select>
 
-</select>
+            </div>
 
-        </div>
+            <div>
 
-        <div class="form-group">
+                <label><b>Paket Laundry</b></label>
 
-            <label>🧺 Jenis Paket Laundry</label>
+                <select id="paket" class="form-control" name="paket_id" required>
 
-            <select name="paket_id" id="paket_id" class="form-control" required>
+                    <option value="">-- Pilih Paket --</option>
 
-                <option value="">-- Pilih Paket --</option>
+                    @foreach($paket as $p)
 
-                @foreach($paket as $p)
-
-                    <option value="{{ $p->id }}"
-
+                        <option
+                            value="{{ $p->id }}"
                             data-harga="{{ $p->harga }}">
 
-                        {{ $p->nama_paket }}
+                            {{ $p->nama_paket }}
+                            - Rp {{ number_format($p->harga,0,',','.') }}
 
-                        - Rp {{ number_format($p->harga,0,',','.') }}/Kg
+                        </option>
 
-                    </option>
+                    @endforeach
 
-                @endforeach
+                </select>
 
-            </select>
+            </div>
 
-        </div>
+            <div>
 
-        <div class="form-group">
+                <label><b>Berat Cucian (Kg)</b></label>
 
-            <label>⚖ Berat Cucian (Kg)</label>
+                <input
+                    type="number"
+                    name="berat_kg"
+                    id="berat"
+                    class="form-control"
+                    step="0.1"
+                    min="1"
+                    required>
 
-            <input type="number"
+            </div>
 
-                   id="berat_kg"
+            <div>
 
-                   name="berat_kg"
+                <label><b>Total Harga</b></label>
 
-                   class="form-control"
+                <input
+                    type="text"
+                    id="total"
+                    class="form-control"
+                    value="Rp 0"
+                    readonly>
 
-                   step="0.1"
+            </div>
 
-                   min="0.1"
+            <div>
 
-                   placeholder="Contoh : 3.5"
+                <label><b>Status</b></label>
 
-                   required>
+                <input
+                    type="text"
+                    class="form-control"
+                    value="Proses"
+                    readonly>
 
-        </div>
-
-        <div class="form-group">
-
-            <label>💰 Total Harga</label>
-
-            <input type="text"
-
-                   id="total_harga"
-
-                   class="form-control"
-
-                   value="Rp 0"
-
-                   readonly>
-
-        </div>
-
-        <div class="form-group">
-
-            <label>Status Laundry</label>
-
-            <input type="text"
-
-                   class="form-control"
-
-                   value="Proses"
-
-                   readonly>
+            </div>
 
         </div>
 
-        <button type="submit" class="btn btn-success">
+        <div style="margin-top:30px;">
 
-            💾 Simpan Transaksi
+            <button class="btn" type="submit">
 
-        </button>
+                <i class="fa-solid fa-floppy-disk"></i>
 
-        <a href="{{ route('transaksi.index') }}"
+                Simpan Transaksi
 
-           class="btn btn-secondary">
+            </button>
 
-            ↩ Kembali
-
-        </a>
+        </div>
 
     </form>
 
@@ -134,39 +138,31 @@
 
 <script>
 
-const paket=document.getElementById('paket_id');
+const paket=document.getElementById('paket');
+const berat=document.getElementById('berat');
+const total=document.getElementById('total');
 
-const berat=document.getElementById('berat_kg');
-
-const total=document.getElementById('total_harga');
-
-function hitungTotal(){
+function hitung(){
 
     let harga=0;
 
     if(paket.selectedIndex>0){
 
         harga=parseFloat(
-
             paket.options[paket.selectedIndex].dataset.harga
-
         );
 
     }
 
     let kg=parseFloat(berat.value)||0;
 
-    let hasil=harga*kg;
-
-    total.value="Rp "+hasil.toLocaleString('id-ID');
+    total.value='Rp '+(harga*kg).toLocaleString('id-ID');
 
 }
 
-paket.addEventListener('change',hitungTotal);
+paket.addEventListener('change',hitung);
 
-berat.addEventListener('keyup',hitungTotal);
-
-berat.addEventListener('change',hitungTotal);
+berat.addEventListener('input',hitung);
 
 </script>
 

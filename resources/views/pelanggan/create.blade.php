@@ -1,103 +1,56 @@
 @extends('layouts.app')
 
-@section('title','Tambah Pelanggan')
-
-@section('page-title','Tambah Pelanggan')
-
 @section('content')
+<div class="container-fluid px-4 mt-4">
+    <div class="max-w-xl mx-auto bg-white p-4 rounded shadow-sm">
+        <h2 class="fw-bold mb-4 text-dark">Tambah Pelanggan Baru</h2>
 
-<div class="table-box">
+        <form action="{{ route('pelanggan.store') }}" method="POST">
+            @csrf
 
-    <div style="margin-bottom:25px;">
+            <!-- Input Nama -->
+            <div class="mb-3">
+                <label class="form-label fw-semibold">Nama Pelanggan</label>
+                <input type="text" name="nama" class="form-control" placeholder="Masukkan nama pelanggan" required>
+            </div>
 
-        <h2>Tambah Data Pelanggan</h2>
+            <!-- Input Telepon -->
+            <div class="mb-3">
+                <label class="form-label fw-semibold">No. Telepon</label>
+                <input type="text" name="telepon" class="form-control" placeholder="Contoh: 08123456789" required>
+            </div>
 
-        <small style="color:gray;">
+            <!-- Input Jenis Kelamin -->
+            <div class="mb-3">
+                <label class="form-label fw-semibold">Jenis Kelamin</label>
+                <select name="jenis_kelamin" class="form-select" required>
+                    <option value="" selected disabled>-- Pilih Jenis Kelamin --</option>
+                    <option value="Laki-laki">Laki-laki</option>
+                    <option value="Perempuan">Perempuan</option>
+                </select>
+            </div>
 
-            Silakan isi data pelanggan dengan lengkap.
+            <!-- Input Alamat -->
+            <div class="mb-3">
+                <label class="form-label fw-semibold">Alamat</label>
+                <textarea name="alamat" rows="3" class="form-control" placeholder="Masukkan alamat lengkap"></textarea>
+            </div>
 
-        </small>
+            <!-- Input Status -->
+            <div class="mb-4">
+                <label class="form-label fw-semibold">Status</label>
+                <select name="status" class="form-select">
+                    <option value="Aktif" selected>Aktif</option>
+                    <option value="Nonaktif">Nonaktif</option>
+                </select>
+            </div>
 
+            <!-- Tombol -->
+            <div class="d-flex justify-content-end gap-2">
+                <a href="{{ route('pelanggan.index') }}" class="btn btn-secondary px-4">Batal</a>
+                <button type="submit" class="btn btn-success px-4 fw-semibold">Simpan</button>
+            </div>
+        </form>
     </div>
-
-    <form action="{{ route('pelanggan.store') }}" method="POST">
-
-        @csrf
-
-        <div style="margin-bottom:20px;">
-
-            <label>Nama Pelanggan</label>
-
-            <input
-
-                type="text"
-
-                name="nama"
-
-                class="form-control"
-
-                placeholder="Masukkan nama pelanggan"
-
-                required>
-
-        </div>
-
-        <div style="margin-bottom:20px;">
-
-            <label>No HP</label>
-
-            <input
-
-                type="text"
-
-                name="telepon"
-
-                class="form-control"
-
-                placeholder="08xxxxxxxxxx"
-
-                required>
-
-        </div>
-
-        <div style="margin-bottom:20px;">
-
-            <label>Alamat</label>
-
-            <textarea
-
-                name="alamat"
-
-                rows="4"
-
-                class="form-control"
-
-                placeholder="Masukkan alamat pelanggan"
-
-                required></textarea>
-
-        </div>
-
-        <div>
-
-            <button class="btn">
-
-                <i class="fa fa-save"></i>
-
-                Simpan
-
-            </button>
-
-            <a href="{{ route('pelanggan.index') }}" class="btn" style="background:#6c757d;">
-
-                Kembali
-
-            </a>
-
-        </div>
-
-    </form>
-
 </div>
-
 @endsection

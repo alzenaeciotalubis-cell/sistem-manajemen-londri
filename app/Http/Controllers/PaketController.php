@@ -3,49 +3,105 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+
 use App\Models\Paket;
 
 class PaketController extends Controller
+
 {
+
     public function index()
+
     {
-        $data = Paket::all();
-        return view('paket.index', compact('data'));
+
+        $pakets = Paket::latest()->get();
+
+        return view('paket.index', compact('pakets'));
+
     }
 
     public function create()
+
     {
+
         return view('paket.create');
+
     }
 
     public function store(Request $request)
+
     {
+
+        $request->validate([
+
+            'nama_paket' => 'required',
+
+            'harga' => 'required|numeric',
+
+        ]);
+
         Paket::create($request->all());
-        return redirect()->route('paket.index');
+
+        return redirect()->route('paket.index')
+
+            ->with('success', 'Paket berhasil ditambahkan');
+
     }
 
     public function show($id)
+
     {
-        $data = Paket::findOrFail($id);
-        return view('paket.show', compact('data'));
+
+        $paket = Paket::findOrFail($id);
+
+        return view('paket.show', compact('paket'));
+
     }
 
     public function edit($id)
+
     {
-        $data = Paket::findOrFail($id);
-        return view('paket.edit', compact('data'));
+
+        $paket = Paket::findOrFail($id);
+
+        return view('paket.edit', compact('paket'));
+
     }
 
     public function update(Request $request, $id)
+
     {
-        $data = Paket::findOrFail($id);
-        $data->update($request->all());
-        return redirect()->route('paket.index');
+
+        $request->validate([
+
+            'nama_paket' => 'required',
+
+            'harga' => 'required|numeric',
+
+        ]);
+
+        $paket = Paket::findOrFail($id);
+
+        $paket->update($request->all());
+
+        return redirect()->route('paket.index')
+
+            ->with('success', 'Paket berhasil diperbarui');
+
     }
 
     public function destroy($id)
+
     {
-        Paket::findOrFail($id)->delete();
-        return redirect()->route('paket.index');
+
+        $paket = Paket::findOrFail($id);
+
+        $paket->delete();
+
+        return redirect()->route('paket.index')
+
+            ->with('success', 'Paket berhasil dihapus');
+
     }
+
 }

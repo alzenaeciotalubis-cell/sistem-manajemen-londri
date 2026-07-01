@@ -9,10 +9,13 @@ class Pelanggan extends Model
 {
     use HasFactory;
 
-    // Izinkan kolom ini diisi dari form
+    protected $table = 'pelanggans';
+
     protected $fillable = [
         'nama',
         'telepon',
-        'alamat'
+        'jenis_kelamin',
+        'alamat',
+        'status'
     ];
 }

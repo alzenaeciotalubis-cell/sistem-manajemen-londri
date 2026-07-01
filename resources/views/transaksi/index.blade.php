@@ -1,180 +1,107 @@
 @extends('layouts.app')
 
-@section('title','Data Transaksi')
-
-@section('page-title','Data Transaksi')
+@section('title', 'Data Transaksi')
 
 @section('content')
 
-<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:25px;">
+<div class="container-fluid">
 
-    <div>
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h3 class="fw-bold">Data Transaksi</h3>
 
-        <h2>Manajemen Transaksi</h2>
-
-        <small style="color:gray;">
-
-            Kelola semua transaksi laundry.
-
-        </small>
-
+        <a href="{{ route('transaksi.create') }}" class="btn btn-success">
+            + Tambah Transaksi
+        </a>
     </div>
 
-    <a href="{{ route('transaksi.create') }}" class="btn">
+    @if(session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+    @endif
 
-        <i class="fa fa-plus"></i> Tambah Transaksi
+    <div class="card shadow">
 
-    </a>
+        <div class="card-body">
 
-</div>
+            <table class="table table-bordered table-striped table-hover">
 
-<div class="cards">
+                <thead class="table-success">
+                    <tr>
+                        <th>No</th>
+                        <th>Pelanggan</th>
+                        <th>Paket</th>
+                        <th>Berat (Kg)</th>
+                        <th>Total Harga</th>
+                        <th>Aksi</th>
+                    </tr>
+                </thead>
 
-    <div class="card">
+                <tbody>
 
-        <h3>Total Transaksi</h3>
+                @forelse($transaksi as $item)
 
-        <h1>{{ $transaksis->count() }}</h1>
+                    <tr>
 
-        <p>Semua transaksi</p>
+                        <td>{{ $loop->iteration }}</td>
+
+                        <td>{{ $item->pelanggan->nama }}</td>
+
+                        <td>{{ $item->paket->nama_paket }}</td>
+
+                        <td>{{ $item->berat_kg }}</td>
+
+                        <td>
+                            Rp {{ number_format($item->total_harga,0,',','.') }}
+                        </td>
+
+                        <td>
+
+                            <a href="{{ route('transaksi.show',$item->id) }}"
+                               class="btn btn-info btn-sm">
+                                Detail
+                            </a>
+
+                            <a href="{{ route('transaksi.edit',$item->id) }}"
+                               class="btn btn-warning btn-sm">
+                                Edit
+                            </a>
+
+                            <form action="{{ route('transaksi.destroy',$item->id) }}"
+                                  method="POST"
+                                  style="display:inline-block">
+
+                                @csrf
+                                @method('DELETE')
+
+                                <button class="btn btn-danger btn-sm"
+                                        onclick="return confirm('Yakin ingin menghapus data ini?')">
+                                    Hapus
+                                </button>
+
+                            </form>
+
+                        </td>
+
+                    </tr>
+
+                @empty
+
+                    <tr>
+                        <td colspan="6" class="text-center">
+                            Belum ada data transaksi.
+                        </td>
+                    </tr>
+
+                @endforelse
+
+                </tbody>
+
+            </table>
+
+        </div>
 
     </div>
-
-    <div class="card">
-
-        <h3>Selesai</h3>
-
-        <h1>{{ $transaksis->where('status','Selesai')->count() }}</h1>
-
-        <p>Transaksi selesai</p>
-
-    </div>
-
-    <div class="card">
-
-        <h3>Diproses</h3>
-
-        <h1>{{ $transaksis->where('status','Diproses')->count() }}</h1>
-
-        <p>Sedang diproses</p>
-
-    </div>
-
-    <div class="card">
-
-        <h3>Total Pendapatan</h3>
-
-        <h1>
-
-            Rp {{ number_format($transaksis->sum('total_bayar'),0,',','.') }}
-
-        </h1>
-
-    </div>
-
-</div>
-
-<div class="table-box">
-
-<table>
-
-<thead>
-
-<tr>
-
-    <th>No</th>
-
-    <th>Pelanggan</th>
-
-    <th>Paket</th>
-
-    <th>Status</th>
-
-    <th>Total</th>
-
-    <th>Aksi</th>
-
-</tr>
-
-</thead>
-
-<tbody>
-
-@forelse($transaksis as $item)
-
-<tr>
-
-<td>{{ $loop->iteration }}</td>
-
-<td>{{ $item->pelanggan }}</td>
-
-<td>{{ $item->paket }}</td>
-
-<td>
-
-    <span class="status">
-
-        {{ $item->status }}
-
-    </span>
-
-</td>
-
-<td>
-
-    Rp {{ number_format($item->total_bayar,0,',','.') }}
-
-</td>
-
-<td>
-
-<a href="{{ route('transaksi.edit',$item->id) }}" class="btn">
-
-Edit
-
-</a>
-
-<form action="{{ route('transaksi.destroy',$item->id) }}"
-
-method="POST"
-
-style="display:inline;">
-
-@csrf
-
-@method('DELETE')
-
-<button class="btn"
-
-onclick="return confirm('Yakin ingin menghapus?')">
-
-Hapus
-
-</button>
-
-</form>
-
-</td>
-
-</tr>
-
-@empty
-
-<tr>
-
-<td colspan="6" style="text-align:center;">
-
-Belum ada transaksi.
-
-</td>
-
-</tr>
-
-@endforelse
-
-</tbody>
-
-</table>
 
 </div>
 

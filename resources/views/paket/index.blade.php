@@ -1,158 +1,459 @@
 @extends('layouts.app')
 
-@section('title','Paket Laundry')
+@section('title','Data Layanan')
 
-@section('page-title','Paket Laundry')
+@section('page-title','Data Layanan')
 
 @section('content')
 
-<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:25px;">
+<style>
 
-    <div>
+.page-header{
 
-        <h2>Manajemen Paket Laundry</h2>
+    display:flex;
 
-        <small style="color:gray;">
+    justify-content:space-between;
 
-            Kelola semua paket laundry.
+    align-items:center;
 
-        </small>
+    margin-bottom:30px;
 
-    </div>
+}
 
-    <a href="{{ route('paket.create') }}" class="btn">
+.page-header h2{
 
-        <i class="fa fa-plus"></i> Tambah Paket
+    font-size:32px;
 
-    </a>
+    color:#222;
+
+}
+
+.page-header p{
+
+    color:#777;
+
+    margin-top:6px;
+
+}
+
+.btn-primary{
+
+    background:#16a34a;
+
+    color:#fff;
+
+    text-decoration:none;
+
+    padding:12px 22px;
+
+    border-radius:12px;
+
+    font-weight:bold;
+
+    transition:.3s;
+
+    display:inline-block;
+
+}
+
+.btn-primary:hover{
+
+    background:#15803d;
+
+    transform:translateY(-2px);
+
+}
+
+.cards{
+
+    display:grid;
+
+    grid-template-columns:repeat(4,1fr);
+
+    gap:20px;
+
+    margin-bottom:30px;
+
+}
+
+.card{
+
+    background:#fff;
+
+    border-radius:18px;
+
+    padding:25px;
+
+    box-shadow:0 10px 20px rgba(0,0,0,.08);
+
+    border-left:6px solid #16a34a;
+
+    transition:.3s;
+
+}
+
+.card:hover{
+
+    transform:translateY(-5px);
+
+}
+
+.card h4{
+
+    color:#666;
+
+    margin-bottom:10px;
+
+    font-size:15px;
+
+}
+
+.card h2{
+
+    font-size:34px;
+
+    color:#15803d;
+
+    margin-bottom:8px;
+
+}
+
+.card span{
+
+    color:#888;
+
+    font-size:14px;
+
+}
+
+.table-box{
+
+    background:#fff;
+
+    border-radius:18px;
+
+    padding:25px;
+
+    box-shadow:0 10px 20px rgba(0,0,0,.08);
+
+    overflow-x:auto;
+
+}
+
+table{
+
+    width:100%;
+
+    border-collapse:collapse;
+
+}
+
+table th{
+
+    background:#15803d;
+
+    color:white;
+
+    padding:15px;
+
+    text-align:left;
+
+}
+
+table td{
+
+    padding:15px;
+
+    border-bottom:1px solid #eee;
+
+}
+
+table tbody tr:hover{
+
+    background:#f0fdf4;
+
+}
+
+.btn-edit{
+
+    background:#2563eb;
+
+    color:#fff;
+
+    text-decoration:none;
+
+    padding:8px 15px;
+
+    border-radius:8px;
+
+    margin-right:5px;
+
+}
+
+.btn-delete{
+
+    background:#dc2626;
+
+    color:#fff;
+
+    border:none;
+
+    padding:8px 15px;
+
+    border-radius:8px;
+
+    cursor:pointer;
+
+}
+
+.btn-edit:hover{
+
+    background:#1d4ed8;
+
+}
+
+.btn-delete:hover{
+
+    background:#b91c1c;
+
+}
+
+.empty{
+
+    text-align:center;
+
+    color:#888;
+
+    padding:35px;
+
+}
+
+@media(max-width:1000px){
+
+.cards{
+
+grid-template-columns:repeat(2,1fr);
+
+}
+
+}
+
+@media(max-width:700px){
+
+.cards{
+
+grid-template-columns:1fr;
+
+}
+
+.page-header{
+
+flex-direction:column;
+
+align-items:flex-start;
+
+gap:15px;
+
+}
+
+}
+
+</style>
+
+<div class="page-header">
+
+<div>
+
+<h2>📦 Manajemen Data Layanan</h2>
+
+<p>Kelola seluruh paket layanan laundry dengan mudah.</p>
+
+</div>
+
+<a href="{{ route('paket.create') }}" class="btn-primary">
+
+<i class="fas fa-plus"></i>
+
+Tambah Paket
+
+</a>
 
 </div>
 
 <div class="cards">
 
-    <div class="card">
+<div class="card">
 
-        <h3>Total Paket</h3>
+<h4>Total Paket</h4>
 
-        <h1>{{ $pakets->count() }}</h1>
+<h2>{{ $pakets->count() }}</h2>
 
-        <p>Semua paket</p>
-
-    </div>
-
-    <div class="card">
-
-        <h3>Paket Aktif</h3>
-
-        <h1>{{ $pakets->count() }}</h1>
-
-        <p>Tersedia</p>
-
-    </div>
-
-    <div class="card">
-
-        <h3>Harga Termurah</h3>
-
-        <h1>Rp {{ number_format($pakets->min('harga') ?? 0,0,',','.') }}</h1>
-
-    </div>
-
-    <div class="card">
-
-        <h3>Harga Tertinggi</h3>
-
-        <h1>Rp {{ number_format($pakets->max('harga') ?? 0,0,',','.') }}</h1>
-
-    </div>
+<span>Semua paket tersedia</span>
 
 </div>
 
+<div class="card">
+
+<h4>Paket Aktif</h4>
+
+<h2>{{ $pakets->count() }}</h2>
+
+<span>Paket yang dapat digunakan</span>
+
+</div>
+
+<div class="card">
+
+<h4>Harga Termurah</h4>
+
+<h2>Rp {{ number_format($pakets->min('harga') ?? 0,0,',','.') }}</h2>
+
+<span>Harga paling rendah</span>
+
+</div>
+
+<div class="card">
+
+<h4>Harga Tertinggi</h4>
+
+<h2>Rp {{ number_format($pakets->max('harga') ?? 0,0,',','.') }}</h2>
+
+<span>Harga paling tinggi</span>
+
+</div>
+
+</div>
 <div class="table-box">
 
-<table>
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
 
-<thead>
+        <h3 style="color:#222;">
 
-<tr>
+            <i class="fas fa-list"></i>
 
-<th>No</th>
+            Daftar Paket Laundry
 
-<th>Nama Paket</th>
+        </h3>
 
-<th>Harga</th>
+        <span style="color:#666;">
 
-<th>Aksi</th>
+            Total Data : <b>{{ $pakets->count() }}</b>
 
-</tr>
+        </span>
 
-</thead>
+    </div>
 
-<tbody>
+    <table>
 
-@forelse($pakets as $paket)
+        <thead>
 
-<tr>
+            <tr>
 
-<td>{{ $loop->iteration }}</td>
+                <th width="60">No</th>
 
-<td>{{ $paket->nama_paket }}</td>
+                <th>Nama Paket</th>
 
-<td>
+                <th width="180">Harga</th>
 
-Rp {{ number_format($paket->harga,0,',','.') }}
+                <th width="220">Aksi</th>
 
-</td>
+            </tr>
 
-<td>
+        </thead>
 
-<a href="{{ route('paket.edit',$paket->id) }}" class="btn">
+        <tbody>
 
-Edit
+            @forelse($pakets as $paket)
 
-</a>
+            <tr>
 
-<form action="{{ route('paket.destroy',$paket->id) }}"
+                <td>{{ $loop->iteration }}</td>
 
-      method="POST"
+                <td>
 
-      style="display:inline;">
+                    <strong>{{ $paket->nama_paket }}</strong>
 
-@csrf
+                </td>
 
-@method('DELETE')
+                <td>
 
-<button class="btn"
+                    <span style="font-weight:bold;color:#16a34a;">
 
-onclick="return confirm('Hapus paket ini?')">
+                        Rp {{ number_format($paket->harga,0,',','.') }}
 
-Hapus
+                    </span>
 
-</button>
+                </td>
 
-</form>
+                <td>
 
-</td>
+                    <a href="{{ route('paket.edit',$paket->id) }}" class="btn-edit">
 
-</tr>
+                        <i class="fas fa-edit"></i>
 
-@empty
+                        Edit
 
-<tr>
+                    </a>
 
-<td colspan="4" style="text-align:center">
+                    <form action="{{ route('paket.destroy',$paket->id) }}"
 
-Belum ada data paket.
+                          method="POST"
 
-</td>
+                          style="display:inline;">
 
-</tr>
+                        @csrf
 
-@endforelse
+                        @method('DELETE')
 
-</tbody>
+                        <button type="submit"
 
-</table>
+                                class="btn-delete"
+
+                                onclick="return confirm('Yakin ingin menghapus paket ini?')">
+
+                            <i class="fas fa-trash"></i>
+
+                            Hapus
+
+                        </button>
+
+                    </form>
+
+                </td>
+
+            </tr>
+
+            @empty
+
+            <tr>
+
+                <td colspan="4" class="empty">
+
+                    <i class="fas fa-box-open"
+
+                       style="font-size:50px;color:#bbb;margin-bottom:15px;display:block;"></i>
+
+                    <h3 style="margin-bottom:10px;color:#555;">
+
+                        Belum Ada Paket Laundry
+
+                    </h3>
+
+                    <p style="color:#888;">
+
+                        Silakan klik tombol <b>Tambah Paket</b> untuk menambahkan data.
+
+                    </p>
+
+                </td>
+
+            </tr>
+
+            @endforelse
+
+        </tbody>
+
+    </table>
 
 </div>
 
