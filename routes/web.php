@@ -1,39 +1,49 @@
+
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
 use App\Http\Controllers\PelangganController;
 use App\Http\Controllers\PaketController;
 use App\Http\Controllers\TransaksiController;
-use App\Http\Controllers\PetugasController;     // <-- Sudah ditambahkan biar tidak eror
-use App\Http\Controllers\PembayaranController;  // <-- Sudah ditambahkan biar tidak eror
+use App\Http\Controllers\PetugasController;
+use App\Http\Controllers\PembayaranController;
 
-// 1. Halaman Awal saat pertama dibuka (Login)
-Route::get('/', function () {
-    return view('login');
-});
+// HALAMAN LOGIN
+Route::view('/', 'login')->name('login');
 
-// 2. Halaman Dashboard Utama (Admin & Petugas)
-Route::get('/admin', function () {
-    return view('dashboard-admin');
-});
+// DASHBOARD ADMIN
+Route::view('/admin', 'dashboard-admin')->name('admin.dashboard');
 
-Route::get('/dashboard-petugas', function () {
-    return view('dashboard-petugas');
-});
+// DASHBOARD PETUGAS
+Route::view('/dashboard-petugas', 'dashboard-petugas')
+    ->name('petugas.dashboard');
 
-Route::get('/logout', function () {
-    return redirect('/');
-});
-
-// 3. JALUR CRUD OTOMATIS
+// DATA PELANGGAN
 Route::resource('pelanggan', PelangganController::class);
+
+// DATA PAKET LAUNDRY
 Route::resource('paket', PaketController::class);
+
+// DATA TRANSAKSI
 Route::resource('transaksi', TransaksiController::class);
+
+// DATA PETUGAS
 Route::resource('petugas', PetugasController::class);
+
+// DATA PEMBAYARAN
 Route::resource('pembayaran', PembayaranController::class);
 
-// 4. Halaman Tambahan
-Route::get('/laporan', function () {
-    return view('laporan');
-});
+// HALAMAN LAPORAN
+Route::view('/laporan', 'laporan')->name('laporan');
+
+// LOGOUT
+Route::get('/logout', function () {
+    Auth::logout();
+
+    request()->session()->invalidate();
+    request()->session()->regenerateToken();
+
+    return redirect('/');
+})->name('logout');

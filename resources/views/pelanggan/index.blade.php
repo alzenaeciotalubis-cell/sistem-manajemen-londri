@@ -3,184 +3,289 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Daftar Pelanggan</title>
-
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-
+    <title>Data Pelanggan - Laundry Bubbles Q</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        body {
-            background-color: #fff0f6;
-        }
-
-        h2 {
-            color: #d63384;
-            font-weight: bold;
-        }
-
-        .card {
-            border-radius: 18px;
-            border: none;
-            box-shadow: 0 5px 15px rgba(214, 51, 132, 0.2);
-        }
-
-        .btn-pink {
-            background-color: #d63384;
-            color: white;
-            border: none;
-        }
-
-        .btn-pink:hover {
-            background-color: #a61e5c;
-            color: white;
-        }
-
-        thead {
-            background-color: #f8bbd0;
-        }
-
-        .table th {
-            color: #9c2760;
-        }
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
     </style>
-
 </head>
+<body class="bg-[#fff9fb] text-slate-800 antialiased min-h-screen flex flex-col md:flex-row">
 
-<body class="container mt-5">
+    <!-- SIDEBAR KIRI -->
+    <aside class="w-full md:w-64 bg-white border-r border-pink-100 flex-shrink-0 flex flex-col justify-between p-6">
+        <div>
+            <!-- Logo & Nama Brand -->
+            <div class="flex items-center gap-3 mb-8">
+                <div class="w-11 h-11 rounded-2xl bg-gradient-to-tr from-pink-500 to-rose-400 flex items-center justify-center text-white font-bold text-xl shadow-md shadow-pink-200">
+                    <i class="fa-solid fa-shirt"></i>
+                </div>
+                <div>
+                    <h1 class="font-extrabold text-base text-slate-900 leading-tight">Laundry</h1>
+                    <p class="text-xs font-bold text-pink-500">Bubbles Q</p>
+                </div>
+            </div>
 
-    <h2 class="mb-4">
-        👤 Daftar Pelanggan
-    </h2>
+            <!-- Menu Utama -->
+            <div class="space-y-1.5">
+                <p class="px-3 text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-2">Menu Utama</p>
 
+                <a href="{{ url('/admin') }}" class="flex items-center gap-3 px-3.5 py-3 rounded-2xl text-xs font-semibold text-slate-600 hover:bg-pink-50 hover:text-pink-600 transition-all">
+                    <i class="fa-solid fa-house w-4"></i> Dashboard
+                </a>
 
-    <div class="mb-4">
+                <a href="{{ url('/pelanggan') }}" class="flex items-center gap-3 px-3.5 py-3 rounded-2xl text-xs font-bold text-white bg-pink-500 shadow-md shadow-pink-200 transition-all">
+                    <i class="fa-solid fa-users w-4"></i> Data Pelanggan
+                </a>
 
-        <a href="{{ route('pelanggan.create') }}" 
-           class="btn btn-pink">
-            + Tambah Pelanggan
-        </a>
+                <a href="{{ url('/paket') }}" class="flex items-center gap-3 px-3.5 py-3 rounded-2xl text-xs font-semibold text-slate-600 hover:bg-pink-50 hover:text-pink-600 transition-all">
+                    <i class="fa-solid fa-jug-detergent w-4"></i> Layanan Laundry
+                </a>
 
+                <a href="{{ url('/transaksi') }}" class="flex items-center gap-3 px-3.5 py-3 rounded-2xl text-xs font-semibold text-slate-600 hover:bg-pink-50 hover:text-pink-600 transition-all">
+                    <i class="fa-solid fa-receipt w-4"></i> Data Transaksi
+                </a>
 
-        <a href="/" 
-           class="btn btn-secondary">
-            ← Dashboard
-        </a>
+                <a href="{{ url('/pembayaran') }}" class="flex items-center gap-3 px-3.5 py-3 rounded-2xl text-xs font-semibold text-slate-600 hover:bg-pink-50 hover:text-pink-600 transition-all">
+                    <i class="fa-solid fa-wallet w-4"></i> Pembayaran
+                </a>
 
-    </div>
+                <a href="{{ url('/petugas') }}" class="flex items-center gap-3 px-3.5 py-3 rounded-2xl text-xs font-semibold text-slate-600 hover:bg-pink-50 hover:text-pink-600 transition-all">
+                    <i class="fa-solid fa-user-shield w-4"></i> Data Petugas
+                </a>
 
+                <a href="{{ url('/laporan') }}" class="flex items-center gap-3 px-3.5 py-3 rounded-2xl text-xs font-semibold text-slate-600 hover:bg-pink-50 hover:text-pink-600 transition-all">
+                    <i class="fa-solid fa-file-lines w-4"></i> Laporan
+                </a>
 
-    @if(session('sukses'))
-
-        <div class="alert alert-success">
-            {{ session('sukses') }}
+                <div class="pt-4">
+                    <a href="{{ url('/logout') }}" class="flex items-center gap-3 px-3.5 py-3 rounded-2xl text-xs font-semibold text-rose-500 hover:bg-rose-50 transition-all">
+                        <i class="fa-solid fa-right-from-bracket w-4"></i> Keluar
+                    </a>
+                </div>
+            </div>
         </div>
 
-    @endif
+        <div class="mt-8 bg-gradient-to-br from-pink-500 to-rose-400 p-4 rounded-2xl text-white text-center shadow-inner">
+            <p class="text-[11px] italic font-medium">"Laundry Bersih, Hidup Lebih Fresh"</p>
+        </div>
+    </aside>
 
+    <!-- KONTEN UTAMA -->
+    <main class="flex-1 flex flex-col min-w-0 overflow-y-auto">
 
+        <!-- Topbar -->
+        <header class="bg-white px-8 py-4 flex items-center justify-between border-b border-pink-50 shadow-sm sticky top-0 z-10">
+            <div class="flex items-center gap-2 text-xs text-slate-400">
+                <a href="{{ url('/admin') }}" class="hover:text-pink-500">Dashboard</a>
+                <i class="fa-solid fa-chevron-right text-[9px]"></i>
+                <span class="text-slate-800 font-bold">Data Pelanggan</span>
+            </div>
 
-    <div class="card p-4">
+            <div class="flex items-center gap-6">
+                <!-- Profil ALZEN LUBIS -->
+                <div class="flex items-center gap-3 border-l pl-6 border-slate-100">
+                    <div class="text-right hidden sm:block">
+                        <p class="text-xs font-bold text-slate-800">ALZEN LUBIS</p>
+                        <p class="text-[10px] text-pink-500 font-bold">Administrator</p>
+                    </div>
+                    <div class="w-9 h-9 rounded-xl bg-pink-100 flex items-center justify-center text-pink-600 font-bold shadow-sm">
+                        <i class="fa-solid fa-user-tie text-xs"></i>
+                    </div>
+                </div>
+            </div>
+        </header>
 
+        <!-- Isi Halaman Data Pelanggan -->
+        <div class="p-8 space-y-6">
 
-        <table class="table table-bordered table-hover">
+            <!-- Banner Judul & Tombol Tambah -->
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 bg-white p-6 rounded-3xl border border-pink-100 shadow-sm">
+                <div>
+                    <h2 class="text-xl font-bold text-slate-900 flex items-center gap-2">
+                        <i class="fa-solid fa-users text-pink-500"></i> Data Pelanggan
+                    </h2>
+                    <p class="text-xs text-slate-500 mt-0.5">Kelola data pelanggan laundry dengan mudah dan cepat.</p>
+                </div>
+                <a href="{{ route('pelanggan.create') }}" class="px-5 py-2.5 bg-pink-500 hover:bg-pink-600 text-white rounded-2xl text-xs font-bold shadow-md shadow-pink-200 transition-all flex items-center gap-2">
+                    <i class="fa-solid fa-plus"></i> Tambah Pelanggan
+                </a>
+            </div>
 
+            <!-- 4 KARTU STATISTIK PELANGGAN -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+                <!-- Total Pelanggan -->
+                <div class="bg-white p-5 rounded-3xl border border-pink-100 shadow-sm flex items-center justify-between">
+                    <div>
+                        <p class="text-[11px] font-bold text-slate-400 uppercase">Total Pelanggan</p>
+                        <h3 class="text-2xl font-bold text-slate-900 mt-1">45</h3>
+                        <span class="text-[10px] font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-full inline-block mt-1.5">
+                            <i class="fa-solid fa-arrow-up text-[9px]"></i> +12%
+                        </span>
+                    </div>
+                    <div class="w-12 h-12 rounded-2xl bg-pink-50 flex items-center justify-center text-pink-500 text-lg shadow-sm">
+                        <i class="fa-solid fa-users"></i>
+                    </div>
+                </div>
 
-            <thead>
+                <!-- Pelanggan Baru -->
+                <div class="bg-white p-5 rounded-3xl border border-pink-100 shadow-sm flex items-center justify-between">
+                    <div>
+                        <p class="text-[11px] font-bold text-slate-400 uppercase">Pelanggan Baru</p>
+                        <h3 class="text-2xl font-bold text-slate-900 mt-1">8</h3>
+                        <span class="text-[10px] font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-full inline-block mt-1.5">
+                            <i class="fa-solid fa-arrow-up text-[9px]"></i> +20%
+                        </span>
+                    </div>
+                    <div class="w-12 h-12 rounded-2xl bg-purple-50 flex items-center justify-center text-purple-500 text-lg shadow-sm">
+                        <i class="fa-solid fa-user-plus"></i>
+                    </div>
+                </div>
 
-                <tr>
-                    <th>No</th>
-                    <th>Nama</th>
-                    <th>Telepon</th>
-                    <th>Alamat</th>
-                    <th>Aksi</th>
-                </tr>
+                <!-- Pelanggan Aktif -->
+                <div class="bg-white p-5 rounded-3xl border border-pink-100 shadow-sm flex items-center justify-between">
+                    <div>
+                        <p class="text-[11px] font-bold text-slate-400 uppercase">Pelanggan Aktif</p>
+                        <h3 class="text-2xl font-bold text-slate-900 mt-1">42</h3>
+                        <span class="text-[10px] font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-full inline-block mt-1.5">
+                            <i class="fa-solid fa-arrow-up text-[9px]"></i> +95%
+                        </span>
+                    </div>
+                    <div class="w-12 h-12 rounded-2xl bg-emerald-50 flex items-center justify-center text-emerald-500 text-lg shadow-sm">
+                        <i class="fa-solid fa-user-check"></i>
+                    </div>
+                </div>
 
-            </thead>
+                <!-- Pelanggan VIP -->
+                <div class="bg-white p-5 rounded-3xl border border-pink-100 shadow-sm flex items-center justify-between">
+                    <div>
+                        <p class="text-[11px] font-bold text-slate-400 uppercase">Pelanggan VIP</p>
+                        <h3 class="text-2xl font-bold text-slate-900 mt-1">5</h3>
+                        <span class="text-[10px] font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-full inline-block mt-1.5">
+                            <i class="fa-solid fa-arrow-up text-[9px]"></i> +11%
+                        </span>
+                    </div>
+                    <div class="w-12 h-12 rounded-2xl bg-amber-50 flex items-center justify-center text-amber-500 text-lg shadow-sm">
+                        <i class="fa-solid fa-crown"></i>
+                    </div>
+                </div>
+            </div>
 
+            <!-- FILTER & PENCARIAN -->
+            <div class="flex flex-col sm:flex-row justify-between items-center gap-4 bg-white p-4 rounded-3xl border border-pink-100 shadow-sm">
+                <!-- Kolom Cari -->
+                <div class="relative w-full sm:w-80">
+                    <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
+                    <input type="text" placeholder="Cari nama pelanggan..." class="w-full pl-9 pr-4 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs focus:outline-none focus:border-pink-400 transition-all">
+                </div>
 
+                <div class="flex items-center gap-3 w-full sm:w-auto justify-end">
+                    <select class="px-4 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold text-slate-600 focus:outline-none focus:border-pink-400">
+                        <option>Semua Status</option>
+                        <option>Aktif</option>
+                        <option>Nonaktif</option>
+                    </select>
 
-            <tbody>
+                    <button class="px-4 py-2 bg-slate-50 hover:bg-pink-50 text-slate-600 hover:text-pink-600 border border-slate-200 rounded-xl text-xs font-semibold transition-all flex items-center gap-2">
+                        <i class="fa-solid fa-rotate-right"></i> Refresh
+                    </button>
+                </div>
+            </div>
 
+            <!-- TABEL DATA PELANGGAN -->
+            <div class="bg-white rounded-3xl border border-pink-100 shadow-sm overflow-hidden">
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left text-xs">
+                        <thead>
+                            <tr class="bg-pink-50/50 text-slate-600 border-b border-pink-100">
+                                <th class="p-4 font-bold">No</th>
+                                <th class="p-4 font-bold">Foto</th>
+                                <th class="p-4 font-bold">Nama Pelanggan</th>
+                                <th class="p-4 font-bold">No. HP</th>
+                                <th class="p-4 font-bold">Alamat</th>
+                                <th class="p-4 font-bold">Status</th>
+                                <th class="p-4 font-bold">Tanggal Daftar</th>
+                                <th class="p-4 font-bold text-center">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-100">
+                            @if(isset($pelanggan) && count($pelanggan) > 0)
+                                @foreach($pelanggan as $index => $p)
+                                    <tr class="hover:bg-pink-50/20 transition-all">
+                                        <td class="p-4 font-semibold text-slate-500">{{ $loop->iteration }}</td>
+                                        <td class="p-4">
+                                            <div class="w-9 h-9 rounded-full bg-pink-100 overflow-hidden flex items-center justify-center font-bold text-pink-600">
+                                                @if(isset($p->foto))
+                                                    <img src="{{ asset('storage/' . $p->foto) }}" class="w-full h-full object-cover">
+                                                @else
+                                                    <i class="fa-solid fa-user text-xs"></i>
+                                                @endif
+                                            </div>
+                                        </td>
+                                        <td class="p-4 font-bold text-slate-900">{{ $p->nama }}</td>
+                                        <td class="p-4 text-slate-600">{{ $p->telepon }}</td>
+                                        <td class="p-4 text-slate-600">{{ $p->alamat }}</td>
+                                        <td class="p-4">
+                                            <span class="bg-emerald-50 text-emerald-600 px-3 py-1 rounded-full text-[10px] font-bold border border-emerald-100 inline-flex items-center gap-1">
+                                                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> Aktif
+                                            </span>
+                                        </td>
+                                        <td class="p-4 text-slate-500">{{ $p->created_at ? $p->created_at->format('d-m-Y') : '-' }}</td>
 
-            @foreach($pelanggan as $no => $p)
+                                        <!-- KOLOM AKSI (EDIT & HAPUS YANG SUDAH DIPERBAIKI) -->
+                                        <td class="p-4 text-center">
+                                            <div class="inline-flex items-center gap-1.5">
+                                                <!-- Tombol Edit -->
+                                                <a href="{{ route('pelanggan.edit', $p->id) }}" class="px-3 py-1.5 bg-pink-50 text-pink-600 hover:bg-pink-500 hover:text-white rounded-xl text-[11px] font-bold transition-all shadow-sm flex items-center gap-1">
+                                                    <i class="fa-solid fa-pen-to-square"></i> Edit
+                                                </a>
 
-                <tr>
+                                                <!-- Tombol Hapus (Menggunakan Form DELETE) -->
+                                                <form action="{{ route('pelanggan.destroy', $p->id) }}" method="POST" onsubmit="return confirm('Yakin ingin menghapus data ini?');" style="display:inline;">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="px-3 py-1.5 bg-rose-50 text-rose-600 hover:bg-rose-500 hover:text-white rounded-xl text-[11px] font-bold transition-all shadow-sm flex items-center gap-1">
+                                                        <i class="fa-solid fa-trash"></i> Hapus
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            @else
+                                <!-- Pesan Jika Data Kosong -->
+                                <tr>
+                                    <td colspan="8" class="p-6 text-center text-slate-400 italic">
+                                        Belum ada data pelanggan di database. Silakan klik tombol "Tambah Pelanggan" di atas.
+                                    </td>
+                                </tr>
+                            @endif
+                        </tbody>
+                    </table>
+                </div>
 
-                    <td>{{ $no+1 }}</td>
+                <!-- Bagian Bawah Tabel: Informasi & Pagination -->
+                <div class="p-4 border-t border-slate-100 flex flex-col sm:flex-row justify-between items-center gap-3 text-xs text-slate-500">
+                    <span>Menampilkan data pelanggan dari database</span>
+                    <div class="flex items-center gap-1">
+                        <button class="px-3 py-1.5 bg-slate-50 rounded-xl hover:bg-pink-50 hover:text-pink-600">&laquo;</button>
+                        <button class="px-3 py-1.5 bg-pink-500 text-white font-bold rounded-xl shadow-sm">1</button>
+                        <button class="px-3 py-1.5 bg-slate-50 rounded-xl hover:bg-pink-50 hover:text-pink-600">&raquo;</button>
+                    </div>
+                </div>
+            </div>
 
-                    <td>{{ $p->nama }}</td>
+        </div>
 
-                    <td>{{ $p->telepon }}</td>
-
-                    <td>{{ $p->alamat }}</td>
-
-
-                    <td>
-
-
-                        <a href="{{ route('pelanggan.edit',$p->id) }}"
-                           class="btn btn-warning btn-sm">
-
-                           ✏️ Edit
-
-                        </a>
-
-
-
-                        <form action="{{ route('pelanggan.destroy',$p->id) }}"
-                              method="POST"
-                              class="d-inline">
-
-
-                            @csrf
-                            @method('DELETE')
-
-
-                            <button 
-                              onclick="return confirm('Yakin hapus?')"
-                              class="btn btn-danger btn-sm">
-
-                              🗑 Hapus
-
-                            </button>
-
-
-                        </form>
-
-
-                    </td>
-
-
-                </tr>
-
-
-            @endforeach
-
-
-
-            @if($pelanggan->isEmpty())
-
-                <tr>
-
-                    <td colspan="5" class="text-center">
-
-                        Belum ada data pelanggan
-
-                    </td>
-
-                </tr>
-
-            @endif
-
-
-            </tbody>
-
-
-        </table>
-
-
-    </div>
-
-
+        <!-- Footer -->
+        <footer class="bg-pink-500 text-white px-8 py-3 text-center text-xs font-semibold flex justify-between items-center mt-auto">
+            <span>© 2026 Laundry Bubbles Q. Sistem Manajemen Laundry.</span>
+            <span>Bersih • Rapi • Terpercaya 🤍</span>
+        </footer>
+    </main>
 
 </body>
 </html>
